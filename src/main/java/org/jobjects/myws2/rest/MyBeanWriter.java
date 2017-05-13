@@ -1,18 +1,22 @@
 package org.jobjects.myws2.rest;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.logging.Logger;
+import javax.json.Json;
+import javax.json.JsonObjectBuilder;
+import javax.json.stream.JsonGenerator;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Classe permettant l'écriture d'un Bean en le transformant en un JSON au
@@ -73,9 +77,14 @@ public class MyBeanWriter implements MessageBodyWriter<MyBean> {
       MediaType mt, MultivaluedMap<String, Object> mm, OutputStream out)
       throws IOException, WebApplicationException {
     ObjectMapper mapper = new ObjectMapper();
-    mapper.setSerializationInclusion(Include.NON_NULL);
+    mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
     mapper.writeValue(out, instance);
-    logger.finest("out -> instance as json : "
-        + mapper.writerWithDefaultPrettyPrinter().writeValueAsString(instance));
+    logger.finest("out -> instance as json : " + mapper.writerWithDefaultPrettyPrinter().writeValueAsString(instance));
+//    JsonGenerator gen = Json.createGenerator(out);
+//    gen.writeStartObject();
+//    if (null != instance.getMessage())
+//      gen.write("message",  instance.getMessage());
+//    gen.writeEnd();
+//    gen.flush();
   }
 }

@@ -2,9 +2,13 @@ package org.jobjects.myws2.rest;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.logging.Logger;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
@@ -57,6 +61,16 @@ public class MyBeanReader implements MessageBodyReader<MyBean> {
     } catch (Exception e) {
       throw new WebApplicationException(e);
     }
+//    try {
+//      instance = new MyBean();
+//      InputStreamReader reader = new InputStreamReader(in, "UTF-8");
+//      JsonReader jsonReader = Json.createReader(reader);
+//      JsonObject jsonObject = jsonReader.readObject();
+//      instance.setMessage(jsonObject.getString("message", null));
+//    } catch (Exception e) {
+//      throw new WebApplicationException(e);
+//    }
+
     return instance;
   }
 }
