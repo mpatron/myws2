@@ -26,7 +26,7 @@ public class HelloWorldEndpointTest {
   // private final static String REDIRECT_PORT = "9143";
   private final static String REDIRECT_PORT = "8080";
   @ArquillianResource
-  private URL deployUrl;
+  protected URL deployUrl;
 
   @Test
   @RunAsClient
