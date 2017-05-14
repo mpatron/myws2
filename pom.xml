@@ -50,6 +50,13 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<properties>
+						<swarm.bind.address>0.0.0.0</swarm.bind.address>
+						<swarm.http.port>8880</swarm.http.port>
+						<java.net.preferIPv4Stack>true</java.net.preferIPv4Stack>
+					</properties>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
