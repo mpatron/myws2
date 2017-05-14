@@ -33,7 +33,7 @@ public class HelloWorldEndpointTest {
   public void testNothing() {
     MyBean returnValue = null;
     String messageValidationError = null;
-    LOGGER.info("public void testNothing() {}");
+    LOGGER.info("public void testNothing() {} to " + deployUrl);
     try {
       Client client = ClientBuilder.newClient();
       WebTarget webTarget = client.target(deployUrl.toString().replace("8080", REDIRECT_PORT) + "api/hello");
