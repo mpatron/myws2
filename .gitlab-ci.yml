@@ -1,0 +1,27 @@
+stages:
+  - test
+  - build
+  - deploy
+before_script:
+  - mvn clean
+maven-test:
+  stage: test
+  script:
+    - echo "Running tests"
+    - mvn test
+maven-build:
+  stage: build
+  script:
+    - echo "Building the app"
+    - mvn compile
+maven-deploy:
+  stage: deploy
+  script:
+    - echo "Deploy to staging server"
+    - mvn package
+  environment:
+    name: Production
+    url: https://staging.example.com
+  when: manual
+  only:
+  - master
