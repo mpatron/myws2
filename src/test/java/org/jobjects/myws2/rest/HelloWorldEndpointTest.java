@@ -24,7 +24,7 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 public class HelloWorldEndpointTest {
   private static Logger LOGGER = Logger.getLogger(HelloWorldEndpointTest.class.getName());
   // private final static String REDIRECT_PORT = "9143";
-  private final static String REDIRECT_PORT = "8080";
+  private final static String REDIRECT_PORT = "8880";
   @ArquillianResource
   protected URL deployUrl;
 

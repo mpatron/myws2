@@ -1,0 +1,5 @@
+logger:
+    level: DEBUG
+swarm:
+  http:
+    port: 8880
