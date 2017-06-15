@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	version="3.1">
+
+	<distributable />
+
+	<display-name>myws2</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<exception-type>java.lang.Throwable</exception-type>
+		<location>/error.jsp</location>
+	</error-page>
+<!-- https://software-security.sans.org/blog/2010/08/11/security-misconfigurations-java-webxml-files/ -->
+	<!-- <security-constraint> <web-resource-collection> <web-resource-name>secure</web-resource-name> 
+		<url-pattern>/secure/*</url-pattern> <http-method>GET</http-method> <http-method>POST</http-method> 
+		</web-resource-collection> <auth-constraint> <role-name>admin</role-name> 
+		</auth-constraint> <user-data-constraint> <transport-guarantee>CONFIDENTIAL</transport-guarantee> 
+		</user-data-constraint> </security-constraint> -->
+
+	<session-config>
+		<session-timeout>15</session-timeout>
+		<cookie-config>
+			<http-only>true</http-only>
+		</cookie-config>
+		<tracking-mode>COOKIE</tracking-mode>
+	</session-config>
+</web-app>
