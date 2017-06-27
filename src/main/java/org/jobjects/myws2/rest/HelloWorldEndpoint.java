@@ -27,7 +27,7 @@ public class HelloWorldEndpoint {
   public Response doPost(MyBean myBean) {
     Response returnValue = null;
     try {
-      myBean.setMessage("Hello world " + (myBean.getMessage() == null ? StringUtils.EMPTY : myBean.getMessage()));
+      myBean.setMessage("Hello world " + (myBean.getMessage() == null ? StringUtils.EMPTY : myBean.getMessage()) + " !");
       returnValue = Response.ok(myBean, MediaType.APPLICATION_JSON).encoding("UTF-8").build();
     } catch (Exception e) {
       LOGGER.log(Level.SEVERE, e.getMessage(), e);

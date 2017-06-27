@@ -49,7 +49,7 @@ public class HelloWorldEndpointTest {
             + (response.bufferEntity() ? response.readEntity(String.class) : "");
         LOGGER.log(Level.WARNING, messageValidationError);
       }
-      Assert.assertEquals("Hello world toto", returnValue.getMessage());
+      Assert.assertEquals("Hello world toto !", returnValue.getMessage());
     } catch (Exception e) {
       LOGGER.log(Level.SEVERE, e.getMessage(), e);
       Assert.assertTrue(false);
