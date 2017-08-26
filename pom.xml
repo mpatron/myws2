@@ -9,8 +9,7 @@
 	<packaging>war</packaging>
 
 	<properties>
-		<version.wildfly.swarm>2017.5.0</version.wildfly.swarm>
-		<version.arquillian>1.1.10.Final</version.arquillian>
+		<version.wildfly.swarm>2017.8.1</version.wildfly.swarm>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<failOnMissingWebXml>false</failOnMissingWebXml>
@@ -25,13 +24,6 @@
 				<version>${version.wildfly.swarm}</version>
 				<scope>import</scope>
 				<type>pom</type>
-			</dependency>
-			<dependency>
-				<groupId>org.jboss.arquillian</groupId>
-				<artifactId>arquillian-bom</artifactId>
-				<version>${version.arquillian}</version>
-				<type>pom</type>
-				<scope>import</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -94,12 +86,6 @@
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>arquillian</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<!-- Brought in via Arquillian BOM, see dependencyManagement section above -->
-		<dependency>
-			<groupId>org.jboss.arquillian.junit</groupId>
-			<artifactId>arquillian-junit-container</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-client -->
