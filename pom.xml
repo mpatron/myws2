@@ -10,6 +10,7 @@
 
 	<properties>
 		<version.wildfly.swarm>2017.8.1</version.wildfly.swarm>
+		<version.h2>1.4.187</version.h2>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<failOnMissingWebXml>false</failOnMissingWebXml>
@@ -20,7 +21,7 @@
 		<dependencies>
 			<dependency>
 				<groupId>org.wildfly.swarm</groupId>
-				<artifactId>bom-all</artifactId>
+				<artifactId>bom</artifactId>
 				<version>${version.wildfly.swarm}</version>
 				<scope>import</scope>
 				<type>pom</type>
@@ -42,11 +43,20 @@
 						<java.net.preferIPv4Stack>true</java.net.preferIPv4Stack>
 					</properties>
 				</configuration>
+				<!-- <executions> <execution> <goals> <goal>package</goal> </goals> </execution> 
+					</executions> -->
 				<executions>
 					<execution>
+						<id>package</id>
 						<goals>
 							<goal>package</goal>
 						</goals>
+					</execution>
+					<execution>
+						<id>start</id>
+					</execution>
+					<execution>
+						<id>stop</id>
 					</execution>
 				</executions>
 			</plugin>
@@ -54,6 +64,11 @@
 	</build>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>${version.h2}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
@@ -76,11 +91,15 @@
 		<!-- WildFly Swarm Fractions -->
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
+			<artifactId>datasources</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>jpa</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>jaxrs-jsonp</artifactId>
+			<artifactId>jaxrs</artifactId>
 		</dependency>
 		<!-- Brought in via WildFly Swarm `bom` -->
 		<dependency>
@@ -95,11 +114,11 @@
 			<version>3.0.14.Final</version>
 			<scope>test</scope>
 		</dependency>
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-jackson-provider</artifactId>
-            <version>3.0.14.Final</version>
-            <scope>provided</scope>
-        </dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jackson-provider</artifactId>
+			<version>3.0.14.Final</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 </project>
