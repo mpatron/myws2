@@ -65,6 +65,16 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.1-api</artifactId>
+			<version>1.0.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.enterprise</groupId>
+			<artifactId>cdi-api</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>${version.h2}</version>
@@ -77,8 +87,13 @@
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.9.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.7.4</version>
+			<version>2.9.0</version>
 			<scope>compile</scope>
 		</dependency>
 		<!-- Java EE 7 dependency -->
@@ -101,6 +116,28 @@
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>jaxrs</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.wildfly.swarm</groupId>
+			<artifactId>jaxrs-jsonp</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.wildfly.swarm</groupId>
+			<artifactId>jaxrs-cdi</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.wildfly.swarm</groupId>
+			<artifactId>cdi</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.wildfly.swarm</groupId>
+			<artifactId>ejb</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.wildfly.swarm</groupId>
+			<artifactId>naming</artifactId>
+		</dependency>
+
+
 		<!-- Brought in via WildFly Swarm `bom` -->
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
