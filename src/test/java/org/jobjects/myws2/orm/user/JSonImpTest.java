@@ -37,7 +37,7 @@ public class JSonImpTest {
   @BeforeClass
   public static void setUpBeforeClass2() throws Exception {
     //JObjectsLogFormatter.initializeLogging();
-    final String filePathname = "/org/jobjects/myws/rest/random-users.json";
+    final String filePathname = "/org/jobjects/myws2/rest/random-users.json";
     try (InputStream is = JSonImpTest.class.getResourceAsStream(filePathname)) {
       JsonReader parser = Json.createReader(is);
       JsonObject jsonObject = parser.readObject();
@@ -59,12 +59,12 @@ public class JSonImpTest {
   // @BeforeClass
   public static void setUpBeforeClass() throws Exception {
     JObjectsLogFormatter.initializeLogging();
-    final String filePathname = "org/jobjects/myws/rest/random-users.json";
+    final String filePathname = "org/jobjects/myws2/rest/random-users.json";
     try {
       URL url = ClassLoader.getSystemResource(filePathname);
       if (url != null) {
         // Path path = Paths.get(url.toURI());
-        Path path = Paths.get(JSonImpTest.class.getResource("/org/jobjects/myws/random-users.json").toURI());
+        Path path = Paths.get(JSonImpTest.class.getResource("/org/jobjects/myws2/random-users.json").toURI());
         if (Files.isReadable(path)) {
           JsonReader parser = Json.createReader(new FileReader(path.toAbsolutePath().toString()));
           JsonObject jsonObject = parser.readObject();
