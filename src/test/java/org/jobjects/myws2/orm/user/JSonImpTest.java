@@ -1,7 +1,8 @@
 package org.jobjects.myws2.orm.user;
 
+import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -37,9 +38,9 @@ public class JSonImpTest {
   @BeforeClass
   public static void setUpBeforeClass2() throws Exception {
     //JObjectsLogFormatter.initializeLogging();
-    final String filePathname = "/org/jobjects/myws2/rest/random-users.json";
-    try (InputStream is = JSonImpTest.class.getResourceAsStream(filePathname)) {
-      JsonReader parser = Json.createReader(is);
+    final String filePathname = "/org/jobjects/myws2/rest/random-users.json";    
+    try (BufferedReader in = new BufferedReader(new InputStreamReader(JSonImpTest.class.getResourceAsStream(filePathname), "UTF-8"));) {
+      JsonReader parser = Json.createReader(in);
       JsonObject jsonObject = parser.readObject();
       JsonArray results = jsonObject.getJsonArray("results");
       results.stream().forEach(obj -> {
