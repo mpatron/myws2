@@ -150,4 +150,17 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
+	
+  <distributionManagement>
+    <repository>
+      <id>nexus</id>
+      <name>Releases</name>
+      <url>http://192.168.56.128:8081/repository/maven-releases/</url>
+    </repository>
+    <snapshotRepository>
+      <id>nexus</id>
+      <name>Snapshot</name>
+      <url>http://192.168.56.128:8081/repository/maven-snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>	
 </project>
