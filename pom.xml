@@ -128,8 +128,23 @@
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>naming</artifactId>
 		</dependency>
-
-
+		<dependency>
+			<groupId>org.wildfly.swarm</groupId>
+			<artifactId>swagger</artifactId>
+			<version>2017.10.1</version>
+		</dependency>
+		<!--
+		<dependency>
+			<groupId>org.wildfly.swarm.servers</groupId>
+			<artifactId>swagger-ui</artifactId>
+			<classifier>swarm</classifier>
+			<version>2017.10.1</version>
+		</dependency>
+		-->
+		<dependency>
+			<groupId>org.wildfly.swarm</groupId>
+			<artifactId>logging</artifactId>
+		</dependency>
 		<!-- Brought in via WildFly Swarm `bom` -->
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
@@ -150,17 +165,17 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
-	
-  <distributionManagement>
-    <repository>
-      <id>nexus</id>
-      <name>Releases</name>
-      <url>http://192.168.56.128:8081/repository/maven-releases/</url>
-    </repository>
-    <snapshotRepository>
-      <id>nexus</id>
-      <name>Snapshot</name>
-      <url>http://192.168.56.128:8081/repository/maven-snapshots/</url>
-    </snapshotRepository>
-  </distributionManagement>	
+
+	<distributionManagement>
+		<repository>
+			<id>nexus</id>
+			<name>Releases</name>
+			<url>http://192.168.56.128:8081/repository/maven-releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>nexus</id>
+			<name>Snapshot</name>
+			<url>http://192.168.56.128:8081/repository/maven-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
 </project>

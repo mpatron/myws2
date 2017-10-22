@@ -8,3 +8,4 @@ curl -i -H "Content-Type: application/json" -X POST -d '{"message" : "toto"}' ht
 
 Pour JDBC, regarder l'exemple https://github.com/wildfly-swarm/wildfly-swarm-examples/tree/2017.8.1/datasource/datasource-war
 https://stackoverflow.com/questions/40294812/how-to-force-maven-to-ignore-repository-from-dependcy-pom-xml
+http://wildfly-swarm.io/posts/wildfly-swarm-s-got-swagger/
