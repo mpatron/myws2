@@ -6,6 +6,10 @@ import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
+import org.jobjects.myws2.rest.tools.CORSFilter;
+import org.jobjects.myws2.rest.tools.CustomRequestWrapperFilter;
+import org.jobjects.myws2.rest.tools.TrafficLogger;
+
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 /**
@@ -26,6 +30,8 @@ public class RestApplicationConfiguration extends Application {
   public Set<Class<?>> getClasses() {
     Set<Class<?>> resources = new HashSet<>();
     resources.add(CORSFilter.class);
+    resources.add(CustomRequestWrapperFilter.class);
+    resources.add(TrafficLogger.class);
     resources.add(HelloWorldEndpoint.class);
     resources.add(MyBeanWriter.class);
     resources.add(MyBeanReader.class);

@@ -12,12 +12,14 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jobjects.myws2.rest.tools.Tracked;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @Path("/hello")
-@Api(value = "/hello", description = "Get the time", tags = "hello")
+@Api(value = "hello", description = "Get the time", tags = "hello")
+@Tracked
 public class HelloWorldEndpoint {
 	private transient Logger LOGGER = Logger.getLogger(getClass().getName());
 

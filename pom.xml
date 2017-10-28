@@ -36,14 +36,6 @@
 				<groupId>org.wildfly.swarm</groupId>
 				<artifactId>wildfly-swarm-plugin</artifactId>
 				<version>${version.wildfly.swarm}</version>
-				<configuration>
-					<fractionDetectMode>force</fractionDetectMode>
-					<properties>
-						<swarm.bind.address>127.0.0.1</swarm.bind.address>
-						<swarm.http.port>8880</swarm.http.port>
-						<java.net.preferIPv4Stack>true</java.net.preferIPv4Stack>
-					</properties>
-				</configuration>
 				<executions>
 					<execution>
 						<goals>
@@ -55,22 +47,8 @@
 		</plugins>
 	</build>
 
+
 	<dependencies>
-		<dependency>
-			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.1-api</artifactId>
-			<version>1.0.0.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.enterprise</groupId>
-			<artifactId>cdi-api</artifactId>
-			<version>1.2</version>
-		</dependency>
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<version>${version.h2}</version>
-		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
@@ -78,14 +56,9 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
-			<version>2.9.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.9.0</version>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.5</version>
 			<scope>compile</scope>
 		</dependency>
 		<!-- Java EE 7 dependency -->
@@ -94,6 +67,12 @@
 			<artifactId>javaee-api</artifactId>
 			<version>7.0</version>
 			<scope>provided</scope>
+		</dependency>
+		<!-- Brought in via WildFly Swarm `bom` -->
+		<dependency>
+			<groupId>org.wildfly.swarm</groupId>
+			<artifactId>arquillian</artifactId>
+			<scope>test</scope>
 		</dependency>
 		<!-- WildFly Swarm Fractions -->
 		<dependency>
@@ -106,7 +85,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>jaxrs</artifactId>
+			<artifactId>swagger</artifactId>
+			<version>2017.10.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
@@ -114,42 +94,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>jaxrs-cdi</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>cdi</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>ejb</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>naming</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>swagger</artifactId>
-			<version>2017.10.1</version>
-		</dependency>
-		<!--
-		<dependency>
-			<groupId>org.wildfly.swarm.servers</groupId>
-			<artifactId>swagger-ui</artifactId>
-			<classifier>swarm</classifier>
-			<version>2017.10.1</version>
-		</dependency>
-		-->
-		<dependency>
-			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>logging</artifactId>
-		</dependency>
-		<!-- Brought in via WildFly Swarm `bom` -->
-		<dependency>
-			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>arquillian</artifactId>
-			<scope>test</scope>
+			<artifactId>cdi</artifactId>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-client -->
 		<dependency>

@@ -1,4 +1,4 @@
-package org.jobjects.myws2.rest;
+package org.jobjects.myws2.rest.tools;
 
 import java.io.IOException;
 import javax.ws.rs.container.ContainerRequestContext;
