@@ -9,7 +9,7 @@
 	<packaging>war</packaging>
 
 	<properties>
-		<version.wildfly.swarm>2017.10.1</version.wildfly.swarm>
+		<version.wildfly.swarm>2017.11.0</version.wildfly.swarm>
 		<version.h2>1.4.187</version.h2>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -86,8 +86,16 @@
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>swagger</artifactId>
-			<version>2017.10.1</version>
+			<version>2017.11.0</version>
 		</dependency>
+<!-- Begin gestion de bug de dépendance -->
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-jaxrs</artifactId>
+			<version>1.5.16</version>
+			<scope>provided</scope>
+		</dependency>
+<!-- End gestion de bug de dépendance -->
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>jaxrs-jsonp</artifactId>

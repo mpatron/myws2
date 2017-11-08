@@ -35,6 +35,12 @@ public class RestApplicationConfiguration extends Application {
     resources.add(HelloWorldEndpoint.class);
     resources.add(MyBeanWriter.class);
     resources.add(MyBeanReader.class);
+    /**
+     * Activation de la génération de swagger.json
+     * http://localhost:8880/api/swagger.json
+     */
+    resources.add(io.swagger.jaxrs.listing.ApiListingResource.class);
+    resources.add(io.swagger.jaxrs.listing.SwaggerSerializers.class);
     return resources;
   }
   
