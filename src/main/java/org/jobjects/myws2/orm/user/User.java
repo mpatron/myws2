@@ -17,7 +17,7 @@ import javax.validation.constraints.Size;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.jobjects.myws2.orm.address.Address;
-import org.jobjects.myws2.orm.tools.AbstractUUIDBaseEntity;
+import org.jobjects.myws2.tools.AbstractUUIDBaseEntity;
 
 /**
  * Table des utilisateurs.

@@ -1,9 +1,8 @@
 package org.jobjects.myws2.orm.user;
 
 import java.util.List;
-
-import org.jobjects.myws2.orm.tools.Facade;
 import org.jobjects.myws2.orm.user.User;
+import org.jobjects.myws2.tools.Facade;
 
 /**
  * @author Mickaël Patron

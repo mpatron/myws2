@@ -1,4 +1,4 @@
-package org.jobjects.myws2.rest.tools;
+package org.jobjects.myws2.tools;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

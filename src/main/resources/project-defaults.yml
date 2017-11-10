@@ -19,4 +19,4 @@ swarm:
     demo.war:
       swagger:
         packages:
-          - org.jobjects.myws2
+          - org.jobjects

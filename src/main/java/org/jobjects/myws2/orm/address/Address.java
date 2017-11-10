@@ -13,9 +13,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
-import org.jobjects.myws2.orm.tools.AbstractUUIDBaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.jobjects.myws2.orm.user.User;
+import org.jobjects.myws2.tools.AbstractUUIDBaseEntity;
 
 /**
  * Table des adresses.

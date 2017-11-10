@@ -10,7 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.apache.commons.lang3.StringUtils;
-import org.jobjects.myws2.rest.tools.Tracked;
+import org.jobjects.myws2.tools.Tracked;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 

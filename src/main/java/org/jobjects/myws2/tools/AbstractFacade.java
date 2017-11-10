@@ -1,4 +1,4 @@
-package org.jobjects.myws2.orm.tools;
+package org.jobjects.myws2.tools;
 
 import java.util.List;
 import java.util.logging.Level;

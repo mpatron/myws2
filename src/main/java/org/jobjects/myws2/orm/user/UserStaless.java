@@ -6,9 +6,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-
-import org.jobjects.myws2.orm.tools.AbstractFacade;
-import org.jobjects.myws2.orm.tools.AppConstants;
+import org.jobjects.myws2.tools.AbstractFacade;
+import org.jobjects.myws2.tools.AppConstants;
 
 /**
  * EJB de la gestion des User.

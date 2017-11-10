@@ -1,6 +1,7 @@
 package org.jobjects.myws2.rest.tools;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
@@ -19,6 +20,12 @@ import javax.ws.rs.ext.Provider;
 @Provider
 @PreMatching
 public class CORSFilter implements ContainerResponseFilter {
+  public CORSFilter() {
+    LOGGER.info("@Provider : CORSFilter loading.....");
+  }
+  
+  private transient Logger LOGGER = Logger.getLogger(getClass().getName());
+  
   @Override
   public void filter(final ContainerRequestContext requestContext, final ContainerResponseContext cres)
       throws IOException {

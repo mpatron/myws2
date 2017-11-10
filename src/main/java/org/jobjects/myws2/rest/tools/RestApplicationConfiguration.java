@@ -1,15 +1,12 @@
-package org.jobjects.myws2.rest;
+package org.jobjects.myws2.rest.tools;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
-
-import org.jobjects.myws2.rest.tools.CORSFilter;
-import org.jobjects.myws2.rest.tools.CustomRequestWrapperFilter;
-import org.jobjects.myws2.rest.tools.TrafficLogger;
-
+import org.jobjects.myws2.rest.HelloWorldEndpoint;
+import org.jobjects.myws2.rest.MyBeanReader;
+import org.jobjects.myws2.rest.MyBeanWriter;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import io.swagger.annotations.Contact;
 import io.swagger.annotations.ExternalDocs;

@@ -1,4 +1,4 @@
-package org.jobjects.myws2.orm.tools;
+package org.jobjects.myws2.tools;
 
 import java.io.Serializable;
 import java.util.UUID;

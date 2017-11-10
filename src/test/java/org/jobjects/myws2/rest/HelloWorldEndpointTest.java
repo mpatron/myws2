@@ -3,14 +3,12 @@ package org.jobjects.myws2.rest;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.StatusType;
-
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -43,13 +41,14 @@ public class HelloWorldEndpointTest {
       StatusType statusType = response.getStatusInfo();
       if (Response.Status.Family.SUCCESSFUL.equals(Response.Status.Family.familyOf(statusType.getStatusCode()))) {
         returnValue = response.readEntity(MyBean.class);
-        LOGGER.info("Return -> " + returnValue);
+        LOGGER.info("Return => " + returnValue);
+        Assert.assertEquals("Hello world toto !", returnValue.getMessage());
       } else {
-        messageValidationError = statusType.getReasonPhrase() + " => "
-            + (response.bufferEntity() ? response.readEntity(String.class) : "");
+        messageValidationError = "Return => Reason : HTTP[" + statusType.getStatusCode() + "] " + statusType.getReasonPhrase() + " Contenu : "
+            + (response.bufferEntity() ? response.readEntity(String.class) : "<empty>");
         LOGGER.log(Level.WARNING, messageValidationError);
+        Assert.assertTrue(false);
       }
-      Assert.assertEquals("Hello world toto !", returnValue.getMessage());
     } catch (Exception e) {
       LOGGER.log(Level.SEVERE, e.getMessage(), e);
       Assert.assertTrue(false);
