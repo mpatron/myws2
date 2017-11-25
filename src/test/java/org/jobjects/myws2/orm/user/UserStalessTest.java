@@ -21,6 +21,7 @@ import org.jobjects.myws2.tools.arquillian.AbstractLocalIT;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.wildfly.swarm.arquillian.DefaultDeployment;
 
 //@Ignore
 @RunWith(Arquillian.class)
@@ -47,9 +48,9 @@ public class UserStalessTest extends AbstractLocalIT {
     }
     Assert.assertNotNull(users);
     Assert.assertTrue(users.size() > 0);
+    ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
     users.stream().parallel().forEach(u -> {
       LOGGER.info("first=" + u.getFirstName() + " last=" + u.getLastName() + " email=" + u.getEmail());
-      ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
       Set<ConstraintViolation<User>> errors = factory.getValidator().validate(u);
       for (ConstraintViolation<User> error : errors) {
         LOGGER.severe(ReflectionToStringBuilder.toString(error.getRootBean(), ToStringStyle.SHORT_PREFIX_STYLE) + " " + error.getMessage()

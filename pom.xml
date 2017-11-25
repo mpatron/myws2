@@ -83,19 +83,27 @@
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>jpa</artifactId>
 		</dependency>
+<dependency>
+    <groupId>org.wildfly.swarm</groupId>
+    <artifactId>undertow</artifactId>
+</dependency>		
+		<dependency>
+			<groupId>org.wildfly.swarm</groupId>
+			<artifactId>logging</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>swagger</artifactId>
-			<version>2017.11.0</version>
+			<version>${version.wildfly.swarm}</version>
 		</dependency>
-<!-- Begin gestion de bug de dépendance -->
+		<!-- Begin gestion de bug de dépendance -->
 		<dependency>
 			<groupId>io.swagger</groupId>
 			<artifactId>swagger-jaxrs</artifactId>
 			<version>1.5.16</version>
 			<scope>provided</scope>
 		</dependency>
-<!-- End gestion de bug de dépendance -->
+		<!-- End gestion de bug de dépendance -->
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>jaxrs-jsonp</artifactId>
@@ -108,6 +116,23 @@
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>cdi</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.wildfly.swarm</groupId>
+			<artifactId>bean-validation</artifactId>
+		</dependency>
+		<!-- Bug sur les test de validation -->
+		<!-- 
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.2.4.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator-annotation-processor</artifactId>
+			<version>5.2.4.Final</version>
+		</dependency>
+		 -->
 		<!-- https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-client -->
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>

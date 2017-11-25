@@ -57,7 +57,7 @@ public class JSonImpTest {
 
   // @BeforeClass
   public static void setUpBeforeClass() throws Exception {
-    JObjectsLogFormatter.initializeLogging();
+    //JObjectsLogFormatter.initializeLogging();
     final String filePathname = "org/jobjects/myws2/rest/random-users.json";
     try {
       URL url = ClassLoader.getSystemResource(filePathname);
