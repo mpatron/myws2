@@ -23,12 +23,11 @@ public class CORSFilter implements ContainerResponseFilter {
   public CORSFilter() {
     LOGGER.info("@Provider : CORSFilter loading.....");
   }
-  
+
   private transient Logger LOGGER = Logger.getLogger(getClass().getName());
-  
+
   @Override
-  public void filter(final ContainerRequestContext requestContext, final ContainerResponseContext cres)
-      throws IOException {
+  public void filter(final ContainerRequestContext requestContext, final ContainerResponseContext cres) throws IOException {
     cres.getHeaders().add("Access-Control-Allow-Origin", "*");
     cres.getHeaders().add("Access-Control-Allow-Headers", "origin, content-type, accept, authorization");
     cres.getHeaders().add("Access-Control-Allow-Credentials", "true");

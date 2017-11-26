@@ -7,7 +7,8 @@ import java.util.List;
  * @author Mickaël Patron
  * @version 2016-05-08
  *
- * @param <T> En paramètre le nom de la class Entity
+ * @param <T>
+ *          En paramètre le nom de la class Entity
  */
 public interface Facade<T> {
   /**

@@ -4,12 +4,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.ejb.EJB;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.ValidatorFactory;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -21,17 +19,12 @@ import org.jobjects.myws2.tools.arquillian.AbstractLocalIT;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.wildfly.swarm.arquillian.DefaultDeployment;
 
-//@Ignore
 @RunWith(Arquillian.class)
 public class UserStalessTest extends AbstractLocalIT {
-
   private static Logger LOGGER = Logger.getLogger(UserStalessTest.class.getName());
-
   @EJB
   UserFacade userFacade;
-
   @EJB
   AddressFacade addressFacade;
 
@@ -56,7 +49,7 @@ public class UserStalessTest extends AbstractLocalIT {
         LOGGER.severe(ReflectionToStringBuilder.toString(error.getRootBean(), ToStringStyle.SHORT_PREFIX_STYLE) + " " + error.getMessage()
             + " due to " + error.getInvalidValue());
       }
-      if(errors.size()==0) {        
+      if (errors.size() == 0) {
         userFacade.create(u);
       }
     });
@@ -65,29 +58,20 @@ public class UserStalessTest extends AbstractLocalIT {
   @Test
   public void testCreate() {
     LOGGER.info("public void testCreate()");
-    
     User user = new User();
     user.setEmail("mpt@gmail.com");
     user.setFirstName("Mickaël");
     user.setLastName("Patron");
-
     Address address = new Address();
     address.setCity("city");
     address.setStreet("street");
     address.setUser(user);
     address.setType(AddressEnum.HOME);
-
     user.getAddress().add(address);
-    
     userFacade.create(user);
-
-    //addressFacade.create(address);
-
-    
     User user2 = userFacade.find(user.getId());
     Assert.assertNotNull(user2);
-    Assert.assertTrue(user2.getAddress().size()>0);
-
+    Assert.assertTrue(user2.getAddress().size() > 0);
     List<User> users = userFacade.findByFirstName("Mickaël");
     for (User user3 : users) {
       Assert.assertNotNull(user3);
@@ -257,5 +241,4 @@ public class UserStalessTest extends AbstractLocalIT {
       Assert.assertTrue(userFacade.findByNamedQuery(User.FIND_BY_EMAIL, "mpt@gmail.com").size() > 0);
     }
   }
-
 }

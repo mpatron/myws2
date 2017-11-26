@@ -66,8 +66,7 @@ public abstract class AbstractFacade<T> implements Facade<T> {
         trx.commit();
       }
     } catch (Throwable t) {
-      logger.log(Level.SEVERE,
-          "JPA Erreur non prevu. Transaction est rollback.", t);
+      logger.log(Level.SEVERE, "JPA Erreur non prevu. Transaction est rollback.", t);
       if (PersistenceContextType.EXTENDED.equals(transactionLocal)) {
         trx.rollback();
       }
@@ -91,8 +90,7 @@ public abstract class AbstractFacade<T> implements Facade<T> {
         trx.commit();
       }
     } catch (Throwable t) {
-      logger.log(Level.SEVERE,
-          "JPA Erreur non prevu. Transaction est rollback.", t);
+      logger.log(Level.SEVERE, "JPA Erreur non prevu. Transaction est rollback.", t);
       if (PersistenceContextType.EXTENDED.equals(transactionLocal)) {
         trx.rollback();
       }
@@ -100,7 +98,8 @@ public abstract class AbstractFacade<T> implements Facade<T> {
     return returnValue;
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
    * @see org.jobjects.myws.orm.tools.Facade#remove(java.lang.Object)
    */
   public void remove(final T entity) {
@@ -115,37 +114,37 @@ public abstract class AbstractFacade<T> implements Facade<T> {
         trx.commit();
       }
     } catch (Throwable t) {
-      logger.log(Level.SEVERE,
-          "JPA Erreur non prevu. Transaction est rollback.", t);
+      logger.log(Level.SEVERE, "JPA Erreur non prevu. Transaction est rollback.", t);
       if (PersistenceContextType.EXTENDED.equals(transactionLocal)) {
         trx.rollback();
       }
     }
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
    * @see org.jobjects.myws.orm.tools.Facade#find(java.lang.Object)
    */
   public T find(final Object id) {
     return getEntityManager().find(entityClass, id);
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
    * @see org.jobjects.myws.orm.tools.Facade#findAll()
    */
   public List<T> findAll() {
-    CriteriaQuery<T> cq = getEntityManager().getCriteriaBuilder()
-        .createQuery(entityClass);
+    CriteriaQuery<T> cq = getEntityManager().getCriteriaBuilder().createQuery(entityClass);
     cq.select(cq.from(entityClass));
     return getEntityManager().createQuery(cq).getResultList();
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
    * @see org.jobjects.myws.orm.tools.Facade#findRange(int, int)
    */
   public List<T> findRange(final int rangeMin, final int rangeMax) {
-    CriteriaQuery<T> cq = getEntityManager().getCriteriaBuilder()
-        .createQuery(entityClass);
+    CriteriaQuery<T> cq = getEntityManager().getCriteriaBuilder().createQuery(entityClass);
     cq.select(cq.from(entityClass));
     TypedQuery<T> q = getEntityManager().createQuery(cq);
     q.setMaxResults(rangeMax - rangeMin);
@@ -153,7 +152,8 @@ public abstract class AbstractFacade<T> implements Facade<T> {
     return q.getResultList();
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
    * @see org.jobjects.myws.orm.tools.Facade#count()
    */
   public long count() {
@@ -163,13 +163,13 @@ public abstract class AbstractFacade<T> implements Facade<T> {
     return getEntityManager().createQuery(cq).getSingleResult();
   }
 
-  /* (non-Javadoc)
-   * @see org.jobjects.myws.orm.tools.Facade#findByNamedQuery(java.lang.String, java.lang.Object[])
+  /*
+   * (non-Javadoc)
+   * @see org.jobjects.myws.orm.tools.Facade#findByNamedQuery(java.lang.String,
+   * java.lang.Object[])
    */
-  public List<T> findByNamedQuery(final String name,
-      final Object... params) {
-    TypedQuery<T> query = getEntityManager().createNamedQuery(name,
-        entityClass);
+  public List<T> findByNamedQuery(final String name, final Object... params) {
+    TypedQuery<T> query = getEntityManager().createNamedQuery(name, entityClass);
     for (int i = 0; i < params.length; i++) {
       query.setParameter(i + 1, params[i]);
     }

@@ -18,8 +18,7 @@ import org.jobjects.myws2.tools.AppConstants;
  */
 @Stateless
 @Local({ AddressFacade.class })
-public class AddressStaless extends AbstractFacade<Address>
-    implements AddressFacade {
+public class AddressStaless extends AbstractFacade<Address> implements AddressFacade {
   /**
    * Le constructeur.
    */
@@ -41,7 +40,8 @@ public class AddressStaless extends AbstractFacade<Address>
     this.entityManager = entityManager;
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
    * @see org.jobjects.myws.orm.tools.AbstractFacade#getEntityManager()
    */
   @Override
@@ -55,8 +55,7 @@ public class AddressStaless extends AbstractFacade<Address>
    */
   @Override
   public List<Address> findByFirstName(final User user) {
-    TypedQuery<Address> query = getEntityManager()
-        .createNamedQuery(Address.FIND_BY_USER, Address.class);
+    TypedQuery<Address> query = getEntityManager().createNamedQuery(Address.FIND_BY_USER, Address.class);
     return query.setParameter("user", user).getResultList();
   }
 }

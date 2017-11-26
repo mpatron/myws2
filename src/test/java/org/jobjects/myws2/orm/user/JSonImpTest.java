@@ -16,14 +16,12 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-import org.jobjects.myws2.tools.log.JObjectsLogFormatter;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class JSonImpTest {
   private static Logger LOGGER = Logger.getLogger(JSonImpTest.class.getName());
-
   private static List<User> users = Collections.synchronizedList(new ArrayList<>());
 
   /**
@@ -35,8 +33,8 @@ public class JSonImpTest {
 
   @BeforeClass
   public static void setUpBeforeClass2() throws Exception {
-    //JObjectsLogFormatter.initializeLogging();
-    final String filePathname = "/org/jobjects/myws2/rest/random-users.json";    
+    // JObjectsLogFormatter.initializeLogging();
+    final String filePathname = "/org/jobjects/myws2/rest/random-users.json";
     try (BufferedReader in = new BufferedReader(new InputStreamReader(JSonImpTest.class.getResourceAsStream(filePathname), "UTF-8"));) {
       JsonReader parser = Json.createReader(in);
       JsonObject jsonObject = parser.readObject();
@@ -57,7 +55,7 @@ public class JSonImpTest {
 
   // @BeforeClass
   public static void setUpBeforeClass() throws Exception {
-    //JObjectsLogFormatter.initializeLogging();
+    // JObjectsLogFormatter.initializeLogging();
     final String filePathname = "org/jobjects/myws2/rest/random-users.json";
     try {
       URL url = ClassLoader.getSystemResource(filePathname);
@@ -96,5 +94,4 @@ public class JSonImpTest {
       LOGGER.info("first=" + u.getFirstName() + " last=" + u.getLastName() + " email=" + u.getEmail());
     });
   }
-
 }

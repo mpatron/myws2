@@ -5,14 +5,12 @@ import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.logging.Logger;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.MessageBodyReader;
 import javax.ws.rs.ext.Provider;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -49,8 +47,8 @@ public class MyBeanReader implements MessageBodyReader<MyBean> {
    * java.io.InputStream)
    */
   @Override
-  public MyBean readFrom(Class<MyBean> type, Type type1, Annotation[] antns, MediaType mt,
-      MultivaluedMap<String, String> mm, InputStream in) throws IOException, WebApplicationException {
+  public MyBean readFrom(Class<MyBean> type, Type type1, Annotation[] antns, MediaType mt, MultivaluedMap<String, String> mm,
+      InputStream in) throws IOException, WebApplicationException {
     MyBean instance = null;
     try {
       ObjectMapper mapper = new ObjectMapper();
@@ -59,16 +57,15 @@ public class MyBeanReader implements MessageBodyReader<MyBean> {
     } catch (Exception e) {
       throw new WebApplicationException(e);
     }
-//    try {
-//      instance = new MyBean();
-//      InputStreamReader reader = new InputStreamReader(in, "UTF-8");
-//      JsonReader jsonReader = Json.createReader(reader);
-//      JsonObject jsonObject = jsonReader.readObject();
-//      instance.setMessage(jsonObject.getString("message", null));
-//    } catch (Exception e) {
-//      throw new WebApplicationException(e);
-//    }
-
+    // try {
+    // instance = new MyBean();
+    // InputStreamReader reader = new InputStreamReader(in, "UTF-8");
+    // JsonReader jsonReader = Json.createReader(reader);
+    // JsonObject jsonObject = jsonReader.readObject();
+    // instance.setMessage(jsonObject.getString("message", null));
+    // } catch (Exception e) {
+    // throw new WebApplicationException(e);
+    // }
     return instance;
   }
 }

@@ -46,7 +46,6 @@ import io.swagger.annotations.Tag;
     externalDocs = @ExternalDocs(value = "Readme a lot", url = "https://github.com/mpatron/myws2/blob/master/readme.md"))
 @ApplicationPath("/api")
 public class RestApplicationConfiguration extends Application {
-
   @Override
   public Set<Class<?>> getClasses() {
     Set<Class<?>> resources = new HashSet<>();
@@ -64,11 +63,11 @@ public class RestApplicationConfiguration extends Application {
     resources.add(io.swagger.jaxrs.listing.SwaggerSerializers.class);
     return resources;
   }
-  
+
   @Override
   public Set<Object> getSingletons() {
-      final Set<Object> instances = new HashSet<Object>();
-      instances.add(new JacksonJsonProvider());
-      return instances;
+    final Set<Object> instances = new HashSet<Object>();
+    instances.add(new JacksonJsonProvider());
+    return instances;
   }
 }

@@ -90,7 +90,7 @@ public class TrafficLogger implements ContainerRequestFilter, ContainerResponseF
        * InputStreamToString(requestContext.getEntityStream()));
        */
       String bodyValue = (String) requestContext.getProperty(CustomRequestWrapperFilter.ENTITY_STREAM_COPY);
-      json.add("BodyRequest", StringUtils.isBlank(bodyValue)?"<empty>":bodyValue);
+      json.add("BodyRequest", StringUtils.isBlank(bodyValue) ? "<empty>" : bodyValue);
       MultivaluedMap<String, String> headers = requestContext.getHeaders();
       JsonObjectBuilder jsonHeaders = Json.createObjectBuilder();
       for (Entry<String, List<String>> entry : headers.entrySet()) {

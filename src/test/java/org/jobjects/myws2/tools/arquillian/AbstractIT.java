@@ -6,7 +6,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
@@ -44,16 +43,15 @@ public abstract class AbstractIT {
   // }
   //
   // }
-
   public static WebArchive createTestableDeployment() {
     WebArchive war = null;
     try {
       war = ShrinkWrap.create(WebArchive.class);
-      //war.addAsWebResource(new File("src/main/webapp/index.html"), "index.html");
+      // war.addAsWebResource(new File("src/main/webapp/index.html"),
+      // "index.html");
       addStandardFileInWebInfResource(war);
       war.addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
       war.addAsManifestResource(new File(SOURCES_MAIN_RESOURCES_DIR + "/META-INF/persistence.xml"), "persistence.xml");
-
       PomEquippedResolveStage pom = Maven.resolver().loadPomFromFile("pom.xml");
       File[] libs = pom.importDependencies(ScopeType.COMPILE).resolve().withTransitivity().asFile();
       war.addAsLibraries(libs);
@@ -64,16 +62,13 @@ public abstract class AbstractIT {
       addAllResources(war, SOURCES_MAIN_RESOURCES_DIR);
       addAllPackages(war, "org.jobjects", new File(SOURCES_TEST_JAVA_DIR + "/org/jobjects"));
       addAllResources(war, SOURCES_TEST_RESOURCES_DIR);
-      //org/jobjects/random-users.json
+      // org/jobjects/random-users.json
       war.addPackages(true, "org.jobjects");
-      
       war.as(ZipExporter.class).exportTo(new File("target/myPackage.war"), true);
-
       LOGGER.severe("==> War name :" + war.toString(Formatters.VERBOSE));
     } catch (Exception e) {
       LOGGER.log(Level.SEVERE, e.getLocalizedMessage(), e);
     }
-
     return war;
   }
 
@@ -101,8 +96,9 @@ public abstract class AbstractIT {
     // prefix);
     // war.addPackages(false,
     // Filters.exclude("(.*)Test.class|"+AbstractIT.class.getPackage().getName()+"(.*)"),
-    // prefix);    
-    //war.addPackages(false, Filters.exclude(CliUtils.class.getPackage()), prefix);
+    // prefix);
+    // war.addPackages(false, Filters.exclude(CliUtils.class.getPackage()),
+    // prefix);
     for (File file : dir.listFiles()) {
       if (file.isDirectory()) {
         addAllPackages(war, prefix + "." + file.getName(), file);
@@ -164,7 +160,5 @@ public abstract class AbstractIT {
     } catch (Exception e) {
       LOGGER.log(Level.SEVERE, e.getLocalizedMessage(), e);
     }
-
   }
-
 }

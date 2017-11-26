@@ -5,14 +5,12 @@ import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.logging.Logger;
-
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -38,10 +36,8 @@ public class MyBeanWriter implements MessageBodyWriter<MyBean> {
    * javax.ws.rs.core.MediaType)
    */
   @Override
-  public boolean isWriteable(Class<?> type, Type genericType,
-      Annotation[] annotations, MediaType mediaType) {
-    logger.info("TypeName=" + genericType.getTypeName() + " CanonicalName="
-        + type.getCanonicalName() + " MyBean.class.isAssignableFrom="
+  public boolean isWriteable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
+    logger.info("TypeName=" + genericType.getTypeName() + " CanonicalName=" + type.getCanonicalName() + " MyBean.class.isAssignableFrom="
         + MyBean.class.isAssignableFrom(type));
     return MyBean.class.isAssignableFrom(type);
   }
@@ -53,8 +49,7 @@ public class MyBeanWriter implements MessageBodyWriter<MyBean> {
    * javax.ws.rs.core.MediaType)
    */
   @Override
-  public long getSize(MyBean t, Class<?> type, Type type1, Annotation[] antns,
-      MediaType mt) {
+  public long getSize(MyBean t, Class<?> type, Type type1, Annotation[] antns, MediaType mt) {
     // http://docs.oracle.com/javaee/7/api/javax/ws/rs/ext/MessageBodyWriter.html#getSize-T-java.lang.Class-java.lang.reflect.Type-java.lang.annotation.Annotation:A-javax.ws.rs.core.MediaType-
     // As of JAX-RS 2.0, the method has been deprecated and the
     // value returned by the method is ignored by a JAX-RS runtime.
@@ -71,18 +66,17 @@ public class MyBeanWriter implements MessageBodyWriter<MyBean> {
    * java.io.OutputStream)
    */
   @Override
-  public void writeTo(MyBean instance, Class<?> type, Type type1, Annotation[] antns,
-      MediaType mt, MultivaluedMap<String, Object> mm, OutputStream out)
-      throws IOException, WebApplicationException {
+  public void writeTo(MyBean instance, Class<?> type, Type type1, Annotation[] antns, MediaType mt, MultivaluedMap<String, Object> mm,
+      OutputStream out) throws IOException, WebApplicationException {
     ObjectMapper mapper = new ObjectMapper();
     mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
     mapper.writeValue(out, instance);
     logger.finest("out -> instance as json : " + mapper.writerWithDefaultPrettyPrinter().writeValueAsString(instance));
-//    JsonGenerator gen = Json.createGenerator(out);
-//    gen.writeStartObject();
-//    if (null != instance.getMessage())
-//      gen.write("message",  instance.getMessage());
-//    gen.writeEnd();
-//    gen.flush();
+    // JsonGenerator gen = Json.createGenerator(out);
+    // gen.writeStartObject();
+    // if (null != instance.getMessage())
+    // gen.write("message", instance.getMessage());
+    // gen.writeEnd();
+    // gen.flush();
   }
 }
