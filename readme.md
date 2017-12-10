@@ -3,6 +3,10 @@
 ## 1 - Lancement de l'application
 Deux modes pour lancer l'application :
 ```bash
+git clone git@github.com:mpatron/myws2.git
+cd myws2
+git checkout tags/v1.4
+
 java -jar target\demo-swarm.jar
 # ou
 mvn wildfly-swarm:run
