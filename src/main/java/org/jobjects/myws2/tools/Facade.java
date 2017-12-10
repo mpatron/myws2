@@ -1,5 +1,6 @@
 package org.jobjects.myws2.tools;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
  * @param <T>
  *          En paramètre le nom de la class Entity
  */
-public interface Facade<T> {
+public interface Facade<T extends AbstractUUIDBaseEntity & Serializable> {
   /**
    * Création dans la table, INSERT.
    * @param entity

@@ -7,6 +7,7 @@ import javax.ws.rs.core.Application;
 import org.jobjects.myws2.rest.HelloWorldEndpoint;
 import org.jobjects.myws2.rest.MyBeanReader;
 import org.jobjects.myws2.rest.MyBeanWriter;
+import org.jobjects.myws2.rest.UserEndpoint;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import io.swagger.annotations.Contact;
 import io.swagger.annotations.ExternalDocs;
@@ -53,6 +54,7 @@ public class RestApplicationConfiguration extends Application {
     resources.add(CustomRequestWrapperFilter.class);
     resources.add(TrafficLogger.class);
     resources.add(HelloWorldEndpoint.class);
+    resources.add(UserEndpoint.class);
     resources.add(MyBeanWriter.class);
     resources.add(MyBeanReader.class);
     /**

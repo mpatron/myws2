@@ -1,5 +1,6 @@
 package org.jobjects.myws2.tools;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,7 +17,7 @@ import javax.persistence.criteria.CriteriaQuery;
  * @param <T>
  *          classe abstraite ORM générique.
  */
-public abstract class AbstractFacade<T> implements Facade<T> {
+public abstract class AbstractFacade<T extends AbstractUUIDBaseEntity & Serializable> implements Facade<T> {
   /**
    * Instance du logger.
    */
