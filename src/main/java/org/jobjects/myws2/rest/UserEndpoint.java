@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.Encoded;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -23,6 +24,7 @@ import org.jobjects.myws2.orm.user.User;
 import org.jobjects.myws2.orm.user.UserFacade;
 import org.jobjects.myws2.tools.Tracked;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * sources
@@ -43,6 +45,7 @@ public class UserEndpoint {
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
+  @ApiOperation(value = "Post the user", notes = "Returns the user as a json", response = User.class)
   public Response create(User entity) {
     User returnValue = facade.save(entity);
     return Response.status(Response.Status.CREATED).entity(returnValue)
@@ -53,6 +56,7 @@ public class UserEndpoint {
   @Path("{id}")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
+  @ApiOperation(value = "Get the user by id", notes = "Returns the user as a json", response = User.class)
   public Response read(@PathParam("id") UUID id) {
     User returnValue = facade.find(id);
     return Response.status(200).entity(returnValue).header("Access-Control-Allow-Headers", "X-extra-header").allow("OPTIONS").build();
@@ -66,6 +70,7 @@ public class UserEndpoint {
    */
   @GET
   @Produces(MediaType.APPLICATION_JSON)
+  @ApiOperation(value = "Get all users", notes = "Returns the user list as a json", response = List.class)
   public List<User> read(@QueryParam("rangeMin") Integer rangeMin, @QueryParam("rangeMax") Integer rangeMax)
       throws WebApplicationException {
     List<User> returnValue = facade.findRange(rangeMin, rangeMax);
@@ -76,6 +81,7 @@ public class UserEndpoint {
   @Path("{id}")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
+  @ApiOperation(value = "Put the user", notes = "Returns the user as a json", response = User.class)
   public Response update(@PathParam("id") UUID id, User entity) throws WebApplicationException {
     User returnValue = facade.find(id);
     if (returnValue == null) {
@@ -97,6 +103,7 @@ public class UserEndpoint {
   @Path("{id}")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
+  @ApiOperation(value = "Delete the user", notes = "Returns the user as a json", response = User.class)
   public Response delete(@PathParam("id") UUID id) throws WebApplicationException {
     User returnValue = facade.find(id);
     if (returnValue == null) {
