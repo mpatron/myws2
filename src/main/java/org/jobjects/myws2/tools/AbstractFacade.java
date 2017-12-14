@@ -55,7 +55,8 @@ public abstract class AbstractFacade<T extends AbstractUUIDBaseEntity & Serializ
    * (non-Javadoc)
    * @see Facade#create(java.lang.Object)
    */
-  public void create(final T entity) {
+  public T create(final T entity) {
+    T returnValue = null;
     EntityTransaction trx = null;
     if (PersistenceContextType.EXTENDED.equals(transactionLocal)) {
       trx = getEntityManager().getTransaction();
@@ -63,6 +64,7 @@ public abstract class AbstractFacade<T extends AbstractUUIDBaseEntity & Serializ
     }
     try {
       getEntityManager().persist(entity);
+      returnValue = entity;
       if (PersistenceContextType.EXTENDED.equals(transactionLocal)) {
         trx.commit();
       }
@@ -72,6 +74,7 @@ public abstract class AbstractFacade<T extends AbstractUUIDBaseEntity & Serializ
         trx.rollback();
       }
     }
+    return returnValue;
   }
 
   /**

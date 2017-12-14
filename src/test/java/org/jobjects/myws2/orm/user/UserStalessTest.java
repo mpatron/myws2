@@ -68,7 +68,8 @@ public class UserStalessTest extends AbstractLocalIT {
     address.setUser(user);
     address.setType(AddressEnum.HOME);
     user.getAddress().add(address);
-    userFacade.create(user);
+    User user33 = userFacade.create(user);
+    Assert.assertTrue(StringUtils.isNotBlank(user33.getId()));
     User user2 = userFacade.find(user.getId());
     Assert.assertNotNull(user2);
     Assert.assertTrue(user2.getAddress().size() > 0);

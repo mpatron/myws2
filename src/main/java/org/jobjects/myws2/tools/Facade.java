@@ -17,7 +17,7 @@ public interface Facade<T extends AbstractUUIDBaseEntity & Serializable> {
    * @param entity
    *          Paramètre
    */
-  void create(T entity);
+  T create(T entity);
 
   /**
    * Sauvegarde dans la table, UPDATE.

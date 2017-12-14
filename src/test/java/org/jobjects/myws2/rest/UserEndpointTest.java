@@ -4,6 +4,7 @@ import static org.junit.Assert.fail;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,6 +41,32 @@ public class UserEndpointTest extends AbstractRemoteIT {
   @ArquillianResource
   protected URL deployUrl;
 
+  private User findUser(String email) {
+    User returnValue = null;
+    String messageValidationError = null;
+    try {
+      String url = deployUrl.toString().replace("8080", REDIRECT_PORT) + "api/users/byemail/"+URLEncoder.encode(email, "UTF-8");
+      LOGGER.info("public void testReadIntegerInteger() {} to " + url);
+      Client client = ClientBuilder.newClient();
+      WebTarget webTarget = client.target(url).queryParam("email", email);
+      Response response = webTarget.request().get();
+      StatusType statusType = response.getStatusInfo();
+      if (Response.Status.Family.SUCCESSFUL.equals(Response.Status.Family.familyOf(statusType.getStatusCode()))) {
+        returnValue = response.readEntity(new GenericType<User>() {
+        });
+        LOGGER.info("Return => " + returnValue);
+      } else {
+        messageValidationError = "Return => Reason : HTTP[" + statusType.getStatusCode() + "] " + statusType.getReasonPhrase()
+            + " Contenu : " + (response.bufferEntity() ? response.readEntity(String.class) : "<empty>");
+        LOGGER.log(Level.WARNING, messageValidationError);
+      }
+    } catch (Throwable e) {
+      LOGGER.log(Level.SEVERE, e.getMessage(), e);
+      Assert.assertTrue(false);
+    }
+    return returnValue;
+  }
+  
   private void createUser(User user) {
     User returnValue = null;
     String messageValidationError = null;
@@ -47,7 +74,7 @@ public class UserEndpointTest extends AbstractRemoteIT {
       String url = deployUrl.toString().replace("8080", REDIRECT_PORT) + "api/users";
       LOGGER.info("public void testReadIntegerInteger() {} to " + url);
       Client client = ClientBuilder.newClient();
-      WebTarget webTarget = client.target(url).queryParam("rangeMin", 0).queryParam("rangeMax", Integer.MAX_VALUE);
+      WebTarget webTarget = client.target(url);
       Response response = webTarget.request().post(Entity.json(user));
       StatusType statusType = response.getStatusInfo();
       if (Response.Status.Family.SUCCESSFUL.equals(Response.Status.Family.familyOf(statusType.getStatusCode()))) {
@@ -74,11 +101,15 @@ public class UserEndpointTest extends AbstractRemoteIT {
       results.stream().forEach(obj -> {
         JsonObject prof = (JsonObject) obj;
         JsonObject name = prof.getJsonObject("name");
-        User user = new User();
-        user.setFirstName(name.getString("first"));
-        user.setLastName(name.getString("last"));
-        user.setEmail(prof.getString("email"));
-        createUser(user);
+        User user;
+        user = findUser(prof.getString("email"));
+        if(user == null) {
+          user = new User();
+          user.setFirstName(name.getString("first"));
+          user.setLastName(name.getString("last"));
+          user.setEmail(prof.getString("email"));
+          createUser(user);
+        } 
       });
     } catch (Exception e) {
       LOGGER.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -98,7 +129,7 @@ public class UserEndpointTest extends AbstractRemoteIT {
       user.setFirstName("firstName");
       user.setEmail("fr.fr@fr.fr");
       Client client = ClientBuilder.newClient();
-      WebTarget webTarget = client.target(url).queryParam("rangeMin", 0).queryParam("rangeMax", Integer.MAX_VALUE);
+      WebTarget webTarget = client.target(url);
       Response response = webTarget.request().post(Entity.json(user));
       StatusType statusType = response.getStatusInfo();
       if (Response.Status.Family.SUCCESSFUL.equals(Response.Status.Family.familyOf(statusType.getStatusCode()))) {
@@ -130,7 +161,7 @@ public class UserEndpointTest extends AbstractRemoteIT {
     List<User> returnValue = null;
     String messageValidationError = null;
     try {
-      String url = deployUrl.toString().replace("8080", REDIRECT_PORT) + "api/users";
+      String url = deployUrl.toString().replace("8080", REDIRECT_PORT) + "api/users/all";
       LOGGER.info("public void testReadIntegerInteger() {} to " + url);
       Client client = ClientBuilder.newClient();
       WebTarget webTarget = client.target(url).queryParam("rangeMin", 0).queryParam("rangeMax", Integer.MAX_VALUE);
