@@ -62,9 +62,9 @@ public class UserEndpoint {
   @Produces(MediaType.APPLICATION_JSON)
   @ApiOperation(value = "Post the user", notes = "Returns the user as a json", response = User.class)
   public Response create(User entity) {
-    if(!isValid(entity)) {
+    if (!isValid(entity)) {
       return Response.status(Response.Status.BAD_REQUEST)
-          //400
+          // 400
           .entity(entity).header("Location", "http://localhost:8880/api/users").build();
     }
     User returnValue = facade.save(entity);
@@ -119,7 +119,7 @@ public class UserEndpoint {
   @ApiOperation(value = "Put the user", notes = "Returns the user as a json", response = User.class)
   public Response update(@PathParam("id") UUID id, User entity) throws WebApplicationException {
     User returnValue = facade.find(id);
-    if(isValid(entity)) {
+    if (isValid(entity)) {
       if (returnValue == null) {
         /* Creation */
         User entitySaved = facade.create(entity);
@@ -136,11 +136,11 @@ public class UserEndpoint {
     } else {
       if (returnValue == null) {
         return Response.status(Response.Status.BAD_REQUEST)
-            //400
+            // 400
             .entity("il faut mettre les erreurs 123456789").header("Location", "http://localhost:8880/api/users/" + entity.getId()).build();
-      }else {
+      } else {
         return Response.status(Response.Status.CONFLICT)
-            //406
+            // 406
             .entity("il faut mettre les erreurs 123456789").header("Location", "http://localhost:8880/api/users/" + entity.getId()).build();
       }
     }

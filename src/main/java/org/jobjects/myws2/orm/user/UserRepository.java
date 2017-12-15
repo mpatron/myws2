@@ -1,6 +1,5 @@
 package org.jobjects.myws2.orm.user;
 import java.util.Collection;
-
 import javax.ejb.Local;
 
 @Local
