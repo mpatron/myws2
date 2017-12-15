@@ -8,6 +8,7 @@ import javax.ejb.EJB;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.ValidatorFactory;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -69,7 +70,8 @@ public class UserStalessTest extends AbstractLocalIT {
     address.setType(AddressEnum.HOME);
     user.getAddress().add(address);
     User user33 = userFacade.create(user);
-    Assert.assertTrue(StringUtils.isNotBlank(user33.getId()));
+    Assert.assertNotNull(user33.getId());
+    Assert.assertTrue(StringUtils.isNotBlank(user33.getId().toString()));
     User user2 = userFacade.find(user.getId());
     Assert.assertNotNull(user2);
     Assert.assertTrue(user2.getAddress().size() > 0);
@@ -142,7 +144,7 @@ public class UserStalessTest extends AbstractLocalIT {
     if (users.size() > 0) {
       for (User user : users) {
         User user1 = userFacade.find(user.getId());
-        Assert.assertTrue(StringUtils.equals(user1.getId(), user.getId()));
+        Assert.assertTrue(user.getId().equals(user1.getId()));
         break;
       }
     } else {

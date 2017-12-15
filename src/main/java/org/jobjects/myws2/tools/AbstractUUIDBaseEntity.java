@@ -21,12 +21,12 @@ public abstract class AbstractUUIDBaseEntity implements Serializable {
    */
   @Id
   @Column(name = "UUID_ID", nullable = false, length = 36)
-  private String id;
+  private UUID id;
 
   /**
    * @return the id
    */
-  public final String getId() {
+  public final UUID getId() {
     return id;
   }
 
@@ -34,7 +34,7 @@ public abstract class AbstractUUIDBaseEntity implements Serializable {
    * @param id
    *          the id to set
    */
-  public final void setId(final String id) {
+  public final void setId(final UUID id) {
     this.id = id;
   }
 
@@ -42,7 +42,7 @@ public abstract class AbstractUUIDBaseEntity implements Serializable {
    * Constructeur de clef UUID.
    */
   public AbstractUUIDBaseEntity() {
-    this.id = UUID.randomUUID().toString();
+    this.id = UUID.randomUUID();
   }
 
   /*
