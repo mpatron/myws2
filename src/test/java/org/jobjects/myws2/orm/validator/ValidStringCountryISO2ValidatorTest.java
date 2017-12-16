@@ -103,7 +103,7 @@ public class ValidStringCountryISO2ValidatorTest {
   }
 
   /**
-   * Seul les pays : "DE","TH","SG","MY","AU","NZ"
+   * Seul les pays : "FR","DE","IT","BE","ES"
    * Vérification de "DE"
    * Resultat attendu : True
    */
@@ -120,23 +120,23 @@ public class ValidStringCountryISO2ValidatorTest {
   }
 
   /**
-   * Seul les pays : "DE","TH","SG","MY","AU","NZ"
+   * Seul les pays : "FR","DE","IT","BE","ES"
    * Vérification de "FR"
    * Resultat attendu : False
    */
   @Test
   public void testStateIsFROnlyCountry() {
     MyBeanTrue myBean = new MyBeanTrue();
-    myBean.setState("FR");
+    myBean.setState("UK");
     ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
     Validator validator = factory.getValidator();
     Set<ConstraintViolation<MyBeanTrue>> constraintViolations = validator.validate(myBean);
     printMyBeanTrue(constraintViolations);
-    assertTrue("Bonne detection de FR", constraintViolations.size() > 0);
+    assertTrue("Bonne detection de UK", constraintViolations.size() > 0);
   }
 
   /**
-   * Seul les pays : "DE","TH","SG","MY","AU","NZ"
+   * Seul les pays : "FR","DE","IT","BE","ES"
    * Vérification de "XX"
    * Resultat attendu : False
    */
@@ -152,7 +152,7 @@ public class ValidStringCountryISO2ValidatorTest {
   }
 
   /**
-   * Seul les pays : "DE","TH","SG","MY","AU","NZ"
+   * Seul les pays : "FR","DE","IT","BE","ES"
    * Vérification de " "
    * Resultat attendu : False
    */
@@ -168,7 +168,7 @@ public class ValidStringCountryISO2ValidatorTest {
   }
 
   /**
-   * Seul les pays : "DE","TH","SG","MY","AU","NZ"
+   * Seul les pays : "FR","DE","IT","BE","ES"
    * Vérification de ""
    * Resultat attendu : True
    */
@@ -184,7 +184,7 @@ public class ValidStringCountryISO2ValidatorTest {
   }
 
   /**
-   * Seul les pays : "DE","TH","SG","MY","AU","NZ"
+   * Seul les pays : "FR","DE","IT","BE","ES"
    * Vérification de null
    * Resultat attendu : True
    */

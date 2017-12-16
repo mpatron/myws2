@@ -1,20 +1,16 @@
 package org.jobjects.myws2.orm.validator;
 
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import org.apache.commons.lang3.StringUtils;
 
 public class ValidStringCountryISO2Validator implements ConstraintValidator<ValidStringCountryISO2, String> {
-  // private static final Set<String> ISO_LANGUAGES = new
-  // HashSet<String>(Arrays.asList(Locale.getISOLanguages()));
-  public static final Set<String> ISO_COUNTRIES = new HashSet<String>(Arrays.asList(Locale.getISOCountries()));
-  public static final Set<String> ISO_ONLY_COUNTRIES = new HashSet<String>(Arrays.asList("DE","TH","SG","MY","AU","NZ"));
-  
-  private boolean onlyCountry=false;
+  public static final List<String> ISO_COUNTRIES = Arrays.asList(Locale.getISOCountries());
+  public static final List<String> ISO_ONLY_COUNTRIES = Arrays.asList("FR", "DE", "IT", "BE", "ES");
+  private boolean onlyCountry = false;
 
   @Override
   public void initialize(ValidStringCountryISO2 constraintAnnotation) {
@@ -25,11 +21,11 @@ public class ValidStringCountryISO2Validator implements ConstraintValidator<Vali
   public boolean isValid(String value, ConstraintValidatorContext context) {
     boolean returnValue = false;
     if (StringUtils.isEmpty(value)) {
-      //On ne valide rien car c'est vide.
+      // On ne valide rien car c'est vide.
       returnValue = true;
     } else {
-    //On valide avec ou pas la restriction.
-      if(onlyCountry) {
+      // On valide avec ou pas la restriction.
+      if (onlyCountry) {
         returnValue = ISO_ONLY_COUNTRIES.contains(value);
       } else {
         returnValue = ISO_COUNTRIES.contains(value);
