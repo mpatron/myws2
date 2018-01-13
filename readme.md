@@ -1,5 +1,10 @@
 # README
 
+## 0 - Status
+Avant de commencer, voir le status du code en cours sur travis-ci :
+https://travis-ci.org/mpatron/myws2
+[![Build Status](https://travis-ci.org/mpatron/myws2.svg?branch=master)](https://travis-ci.org/mpatron/myws2)
+
 ## 1 - Lancement de l'application
 Deux modes pour lancer l'application :
 ```bash
