@@ -13,6 +13,7 @@ import javax.validation.Validation;
 import javax.validation.ValidatorFactory;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -30,6 +31,7 @@ import org.jobjects.myws2.orm.user.UserFacade;
 import org.jobjects.myws2.tools.Tracked;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 /**
  * sources
@@ -67,6 +69,7 @@ public class UserEndpoint {
           // 400
           .entity(entity).header("Location", "http://localhost:8880/api/users").build();
     }
+    entity.setId(UUID.randomUUID());
     User returnValue = facade.save(entity);
     return Response.status(Response.Status.CREATED).entity(returnValue)
         .header("Location", "http://localhost:8880/api/users/" + returnValue.getId()).build();
@@ -104,7 +107,18 @@ public class UserEndpoint {
   @Path("/all")
   @Produces(MediaType.APPLICATION_JSON)
   @ApiOperation(value = "Get all users", notes = "Returns the user list as a json", response = List.class)
-  public List<User> readall(@QueryParam("rangeMin") Integer rangeMin, @QueryParam("rangeMax") Integer rangeMax)
+  public List<User> readall(
+      @ApiParam(
+          defaultValue = "0",
+          name = "rangeMin",
+          required = false,
+          example = "rangeMin=\"0\"") @DefaultValue("0") @QueryParam("rangeMin") Integer rangeMin,
+      @ApiParam(
+          defaultValue = "0",
+          name = "rangeMin",
+          required = false,
+          example = "rangeMin=\"" + Integer.MAX_VALUE + "\"") @DefaultValue(""
+              + Integer.MAX_VALUE) @QueryParam("rangeMax") Integer rangeMax)
       throws WebApplicationException {
     LOGGER.info("public List<User> read(@QueryParam(\"rangeMin\") Integer \"" + rangeMin + "\", @QueryParam(\"rangeMax\") Integer \""
         + rangeMax + "\")");
