@@ -154,7 +154,7 @@ public class UserEndpointTest extends AbstractRemoteIT {
       LOGGER.info("public void testReadIntegerInteger() {} to " + url);
       User user = new User();
       user.setFirstName(RandomStringUtils.random(10));
-      user.setEmail(RandomStringUtils.random(10, true, false) + "@fr.fr");
+      user.setEmail(RandomStringUtils.random(10, true, false).toLowerCase() + "@fr.fr");
       Client client = ClientBuilder.newClient();
       WebTarget webTarget = client.target(url);
       Response response = webTarget.request().post(Entity.json(user));
@@ -227,11 +227,117 @@ public class UserEndpointTest extends AbstractRemoteIT {
 
   @Test
   public void testUpdate() {
-    Assert.assertTrue(true);
+    User returnValue = null;
+    String messageValidationError = null;
+    try {
+      String url = deployUrl.toString().replace("8080", REDIRECT_PORT) + "api/users";
+      LOGGER.info("public void testReadIntegerInteger() {} to " + url);
+      User user = new User();
+      
+      /**
+       * Create
+       */
+      user.setFirstName(RandomStringUtils.random(10));
+      user.setEmail(RandomStringUtils.random(10, true, false).toLowerCase() + "@fr.fr");
+      Client client = ClientBuilder.newClient();
+      WebTarget webTarget = client.target(url);
+      Response response = webTarget.request().post(Entity.json(user));
+      StatusType statusType = response.getStatusInfo();
+      if (Response.Status.Family.SUCCESSFUL.equals(Response.Status.Family.familyOf(statusType.getStatusCode()))) {
+        returnValue = response.readEntity(new GenericType<User>() {
+        });
+        LOGGER.info("Return => " + returnValue);
+      } else {
+        messageValidationError = "Return => Reason : HTTP[" + statusType.getStatusCode() + "] " + statusType.getReasonPhrase()
+            + " Contenu : " + (response.bufferEntity() ? response.readEntity(String.class) : "<empty>");
+        LOGGER.log(Level.WARNING, messageValidationError);
+        Assert.assertTrue(false);
+      }
+      
+      /**
+       * Update
+       */
+      UUID id= returnValue.getId();
+      user.setId(id);
+      String oldValue = user.getEmail();
+      String newValue = RandomStringUtils.random(10, true, false).toLowerCase() + "@fr.fr";
+      user.setEmail(newValue);
+      webTarget = client.target(url+"/"+id);
+      response = webTarget.request().put(Entity.json(user));
+      statusType = response.getStatusInfo();
+      if (Response.Status.Family.SUCCESSFUL.equals(Response.Status.Family.familyOf(statusType.getStatusCode()))) {
+        returnValue = response.readEntity(new GenericType<User>() {
+        });
+        LOGGER.info("Return => " + returnValue);
+        Assert.assertEquals(newValue, returnValue.getEmail());
+        Assert.assertNotEquals(oldValue, returnValue.getEmail());
+      } else {
+        messageValidationError = "Return => Reason : HTTP[" + statusType.getStatusCode() + "] " + statusType.getReasonPhrase()
+            + " Contenu : " + (response.bufferEntity() ? response.readEntity(String.class) : "<empty>");
+        LOGGER.log(Level.WARNING, messageValidationError);
+        Assert.assertTrue(false);
+      }      
+      
+    } catch (Throwable e) {
+      LOGGER.log(Level.SEVERE, e.getMessage(), e);
+      Assert.assertTrue(false);
+    }
   }
 
   @Test
   public void testDelete() {
-    Assert.assertTrue(true);
+    User returnValue = null;
+    String messageValidationError = null;
+    try {
+      String url = deployUrl.toString().replace("8080", REDIRECT_PORT) + "api/users";
+      LOGGER.info("public void testReadIntegerInteger() {} to " + url);
+      User user = new User();
+      
+      /**
+       * Create
+       */
+      user.setFirstName(RandomStringUtils.random(10));
+      user .setLastName(RandomStringUtils.random(10));
+      user.setEmail(RandomStringUtils.random(10, true, false).toLowerCase() + "@fr.fr");
+      Client client = ClientBuilder.newClient();
+      WebTarget webTarget = client.target(url);
+      Response response = webTarget.request().post(Entity.json(user));
+      StatusType statusType = response.getStatusInfo();
+      if (Response.Status.Family.SUCCESSFUL.equals(Response.Status.Family.familyOf(statusType.getStatusCode()))) {
+        returnValue = response.readEntity(new GenericType<User>() {
+        });
+        LOGGER.info("On client, Return => " + returnValue);
+      } else {
+        messageValidationError = "On client, Return => Reason : HTTP[" + statusType.getStatusCode() + "] " + statusType.getReasonPhrase()
+            + " Contenu : " + (response.bufferEntity() ? response.readEntity(String.class) : "<empty>");
+        LOGGER.log(Level.WARNING, messageValidationError);
+        Assert.assertTrue(false);
+      }
+      
+      /**
+       * Delete
+       */
+      UUID id= returnValue.getId();
+      webTarget = client.target(url+"/"+id);
+      response = webTarget.request().delete();
+      statusType = response.getStatusInfo();
+      if (Response.Status.Family.SUCCESSFUL.equals(Response.Status.Family.familyOf(statusType.getStatusCode()))) {
+        LOGGER.info("response.getEntity()=" + response.getEntity());
+        returnValue = response.readEntity(new GenericType<User>() {
+        });
+        LOGGER.info("On client, Return => " + returnValue);
+        Assert.assertEquals(user.getFirstName(), returnValue.getFirstName());
+        Assert.assertEquals(user.getEmail(), returnValue.getEmail());
+      } else {
+        messageValidationError = "On client, Return => Reason : HTTP[" + statusType.getStatusCode() + "] " + statusType.getReasonPhrase()
+            + " Contenu : " + (response.bufferEntity() ? response.readEntity(String.class) : "<empty>");
+        LOGGER.log(Level.WARNING, messageValidationError);
+        Assert.assertTrue(false);
+      }      
+      
+    } catch (Throwable e) {
+      LOGGER.log(Level.SEVERE, e.getMessage(), e);
+      Assert.assertTrue(false);
+    }
   }
 }

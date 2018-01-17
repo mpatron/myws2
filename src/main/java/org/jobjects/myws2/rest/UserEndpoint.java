@@ -25,6 +25,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.jobjects.myws2.orm.user.User;
 import org.jobjects.myws2.orm.user.UserFacade;
@@ -168,9 +169,11 @@ public class UserEndpoint {
   public Response delete(@PathParam("id") UUID id) throws WebApplicationException {
     User returnValue = facade.find(id);
     if (returnValue == null) {
+      LOGGER.info("User => NOT_FOUND");
       return Response.status(Response.Status.NOT_FOUND)// 404
           .build();
     } else {
+      LOGGER.info("User => NO_CONTENT" + ToStringBuilder.reflectionToString(returnValue));
       facade.remove(returnValue);
       return Response.status(Response.Status.NO_CONTENT)// 204
           .entity(returnValue).build();
