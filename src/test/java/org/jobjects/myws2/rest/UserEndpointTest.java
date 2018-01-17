@@ -20,6 +20,7 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.StatusType;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
@@ -152,8 +153,8 @@ public class UserEndpointTest extends AbstractRemoteIT {
       String url = deployUrl.toString().replace("8080", REDIRECT_PORT) + "api/users";
       LOGGER.info("public void testReadIntegerInteger() {} to " + url);
       User user = new User();
-      user.setFirstName("firstName");
-      user.setEmail("fr.fr@fr.fr");
+      user.setFirstName(RandomStringUtils.random(10));
+      user.setEmail(RandomStringUtils.random(10, true, false) + "@fr.fr");
       Client client = ClientBuilder.newClient();
       WebTarget webTarget = client.target(url);
       Response response = webTarget.request().post(Entity.json(user));
@@ -199,7 +200,7 @@ public class UserEndpointTest extends AbstractRemoteIT {
     List<User> returnValue = null;
     String messageValidationError = null;
     try {
-      String url = deployUrl.toString().replace("8080", REDIRECT_PORT) + "api/users/all";
+      String url = deployUrl.toString().replace("8080", REDIRECT_PORT) + "api/users";
       LOGGER.info("public void testReadIntegerInteger() {} to " + url);
       Client client = ClientBuilder.newClient();
       WebTarget webTarget = client.target(url).queryParam("rangeMin", 0).queryParam("rangeMax", Integer.MAX_VALUE);
