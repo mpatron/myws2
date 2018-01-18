@@ -170,12 +170,12 @@ public class UserEndpoint {
     User returnValue = facade.find(id);
     if (returnValue == null) {
       LOGGER.info("User => NOT_FOUND");
-      return Response.status(Response.Status.NOT_FOUND)// 404
+      return Response.status(Response.Status.NO_CONTENT)// 204
           .build();
     } else {
       LOGGER.info("User => NO_CONTENT" + ToStringBuilder.reflectionToString(returnValue));
       facade.remove(returnValue);
-      return Response.status(Response.Status.NO_CONTENT)// 204
+      return Response.status(Response.Status.OK)// 200
           .entity(returnValue).build();
     }
   }
