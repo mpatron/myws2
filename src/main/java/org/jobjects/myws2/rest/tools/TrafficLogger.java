@@ -1,6 +1,8 @@
 package org.jobjects.myws2.rest.tools;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -18,6 +20,7 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.Provider;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jobjects.myws2.tools.Tracked;
 
@@ -88,9 +91,22 @@ public class TrafficLogger implements ContainerRequestFilter, ContainerResponseF
        * mis en mémoire en chaine entityStream. Sans le bug, le code normal
        * aurait été : json.add("BodyRequest",
        * InputStreamToString(requestContext.getEntityStream()));
-       */
-      String bodyValue = (String) requestContext.getProperty(CustomRequestWrapperFilter.ENTITY_STREAM_COPY);
-      json.add("BodyRequest", StringUtils.isBlank(bodyValue) ? "<empty>" : bodyValue);
+       */      
+      //String bodyValue = (String) requestContext.getProperty(CustomRequestWrapperFilter.ENTITY_STREAM_COPY);
+      if (requestContext.hasEntity()) {
+        String bodyValue = null;
+        /**
+         * BEGIN
+         * https://www.programcreek.com/java-api-examples/?api=javax.ws.rs.container.ContainerRequestContext
+         */
+        bodyValue = IOUtils.toString(requestContext.getEntityStream());
+        requestContext.setEntityStream(IOUtils.toInputStream(bodyValue));
+        /**
+         * END
+         */
+        json.add("BodyRequest", StringUtils.isBlank(bodyValue) ? "<empty>" : bodyValue);        
+      }
+      
       MultivaluedMap<String, String> headers = requestContext.getHeaders();
       JsonObjectBuilder jsonHeaders = Json.createObjectBuilder();
       for (Entry<String, List<String>> entry : headers.entrySet()) {
