@@ -1,8 +1,7 @@
 package org.jobjects.myws2.rest.tools;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -12,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
+import javax.sql.StatementEvent;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ContainerResponseContext;
@@ -31,6 +31,12 @@ import org.jobjects.myws2.tools.Tracked;
 @Tracked
 @Provider
 public class TrafficLogger implements ContainerRequestFilter, ContainerResponseFilter {
+  
+  private enum StateEnum {
+    REQUEST, RESPONSE
+  }
+
+  
   public TrafficLogger() {
     LOGGER.info("@Provider : TrafficLogger loading.....");
   }
@@ -43,14 +49,16 @@ public class TrafficLogger implements ContainerRequestFilter, ContainerResponseF
    * javax.ws.rs.container.ContainerRequestFilter#filter(javax.ws.rs.container
    * .ContainerRequestContext)
    */
+  @Override
   public void filter(ContainerRequestContext requestContext) throws IOException {
     try {
-      JsonObjectBuilder json = ContainerRequestContextToJSON(requestContext);
+      JsonObjectBuilder json = containerRequestContextToJSON(requestContext, null, StateEnum.REQUEST);
       String optionKey = "IN-" + requestContext.getUriInfo().getPath();
       String optionValue = json.build().toString();
       LOGGER.log(Level.INFO, "optionKey=" + optionKey + " optionValue=" + optionValue);
     } catch (Exception e) {
       LOGGER.log(Level.SEVERE, "TrafficLogger IN WS Exception ", e);
+      throw e;
     }
   }
 
@@ -60,19 +68,20 @@ public class TrafficLogger implements ContainerRequestFilter, ContainerResponseF
    * javax.ws.rs.container.ContainerResponseFilter#filter(javax.ws.rs.container
    * .ContainerRequestContext, javax.ws.rs.container.ContainerResponseContext)
    */
+  @Override
   public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws IOException {
     try {
-      JsonObjectBuilder json = ContainerRequestContextToJSON(requestContext);
-      json.add("BodyResponse", Objects.toString(responseContext.getEntity()));
+      JsonObjectBuilder json = containerRequestContextToJSON(requestContext, responseContext, StateEnum.RESPONSE);
       String optionKey = "OUT-" + requestContext.getUriInfo().getPath();
       String optionValue = json.build().toString();
       LOGGER.log(Level.INFO, "optionKey=" + optionKey + " optionValue=" + optionValue);
     } catch (Exception e) {
       LOGGER.log(Level.SEVERE, "TrafficLogger OUT WS Exception ", e);
+      throw e;
     }
   }
 
-  private JsonObjectBuilder ContainerRequestContextToJSON(ContainerRequestContext requestContext) {
+  private JsonObjectBuilder containerRequestContextToJSON(ContainerRequestContext requestContext, ContainerResponseContext responseContext, StateEnum state) {
     JsonObjectBuilder json = Json.createObjectBuilder();
     try {
       String userPrincipal = null;
@@ -86,26 +95,27 @@ public class TrafficLogger implements ContainerRequestFilter, ContainerResponseF
       if (uriInfo != null) {
         json.add("UriInfo", "" + uriInfo.getRequestUri().toString());
       }
-      /**
-       * Astuce le stream a déjà été lu par le CustomRequestWrapperFilter et à
-       * mis en mémoire en chaine entityStream. Sans le bug, le code normal
-       * aurait été : json.add("BodyRequest",
-       * InputStreamToString(requestContext.getEntityStream()));
-       */      
-      //String bodyValue = (String) requestContext.getProperty(CustomRequestWrapperFilter.ENTITY_STREAM_COPY);
-      if (requestContext.hasEntity()) {
-        String bodyValue = null;
-        /**
-         * BEGIN
-         * https://www.programcreek.com/java-api-examples/?api=javax.ws.rs.container.ContainerRequestContext
-         */
-        bodyValue = IOUtils.toString(requestContext.getEntityStream());
-        requestContext.setEntityStream(IOUtils.toInputStream(bodyValue));
-        /**
-         * END
-         */
-        json.add("BodyRequest", StringUtils.isBlank(bodyValue) ? "<empty>" : bodyValue);        
+      
+      switch (state) {
+      case REQUEST:
+        if (requestContext.hasEntity()) {
+          String bodyValue = null;
+          bodyValue = IOUtils.toString(requestContext.getEntityStream(), StandardCharsets.UTF_8);
+          requestContext.setEntityStream(IOUtils.toInputStream(bodyValue, StandardCharsets.UTF_8));
+          json.add("BodyRequest", StringUtils.isBlank(bodyValue) ? "<empty>" : bodyValue);        
+        }
+        break;
+      case RESPONSE:
+        if (responseContext.hasEntity()) {
+          String bodyValue = null;
+          bodyValue = Objects.toString(responseContext.getEntity());
+          json.add("BodyResponse", StringUtils.isBlank(bodyValue) ? "<empty>" : bodyValue);        
+        }
+        break;
+      default:
+        break;
       }
+      
       
       MultivaluedMap<String, String> headers = requestContext.getHeaders();
       JsonObjectBuilder jsonHeaders = Json.createObjectBuilder();
@@ -127,24 +137,4 @@ public class TrafficLogger implements ContainerRequestFilter, ContainerResponseF
     }
     return json;
   }
-  // private String InputStreamToString(InputStream is) {
-  // StringBuilder returnValue = new StringBuilder();
-  // try {
-  //
-  // if (is.markSupported()) {
-  // is.mark(1024 * 1024);
-  // }
-  // BufferedReader br = new BufferedReader(new InputStreamReader(is));
-  // String line;
-  // while ((line = br.readLine()) != null) {
-  // returnValue.append(line);
-  // }
-  // if (is.markSupported()) {
-  // is.reset();
-  // }
-  // } catch (Exception e) {
-  // LOGGER.log(Level.SEVERE, "Internal error.", e);
-  // }
-  // return returnValue.toString();
-  // }
 }
