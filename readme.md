@@ -10,7 +10,7 @@ Deux modes pour lancer l'application :
 ```bash
 git clone git@github.com:mpatron/myws2.git
 cd myws2
-git checkout tags/v1.4
+git checkout tags/v1.5
 
 java -jar target\demo-swarm.jar
 # ou
