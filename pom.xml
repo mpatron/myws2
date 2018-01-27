@@ -90,6 +90,12 @@
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>logging</artifactId>
 		</dependency>
+<!-- https://mvnrepository.com/artifact/org.wildfly.swarm/swagger-webapp -->
+<dependency>
+    <groupId>org.wildfly.swarm</groupId>
+    <artifactId>swagger-webapp</artifactId>
+    <version>2018.1.0</version>
+</dependency>
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>swagger</artifactId>

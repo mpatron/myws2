@@ -26,13 +26,9 @@ curl -X GET http://localhost:8880/api/swagger.json
 ```
 
 ## 3 - Swagger
-Lancer dans une console séparée : 
-```bash
-java -jar .\swagger-ui-2017.10.0-swarm.jar
-```
 Accéder à swagger-ui par : 
 ```bash
-http://localhost:8080/swagger-ui
+http://localhost:8880/swagger-ui/
 ```
 Dans la page web de swagger-ui, mentionner l'url suivant :
 ```bash

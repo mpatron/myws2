@@ -27,3 +27,4 @@ target
 
 derby.log
 /nb-configuration.xml
+/audit.log
