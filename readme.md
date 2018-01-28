@@ -1,9 +1,11 @@
 # README
 
 ## 0 - Status
+[![Build Status](https://travis-ci.org/mpatron/myws2.svg?branch=master)](https://travis-ci.org/mpatron/myws2)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
 Avant de commencer, voir le status du code en cours sur travis-ci :
 https://travis-ci.org/mpatron/myws2
-[![Build Status](https://travis-ci.org/mpatron/myws2.svg?branch=master)](https://travis-ci.org/mpatron/myws2)
 
 ## 1 - Lancement de l'application
 Deux modes pour lancer l'application :
