@@ -35,7 +35,7 @@ import io.swagger.annotations.Tag;
 @SwaggerDefinition(
     info = @Info(
         description = "Gets the hello world",
-        version = "v1.5",
+        version = "v1.6",
         title = "The hello API",
         termsOfService = "https://help.github.com/articles/github-terms-of-service/#a-definitions",
         contact = @Contact(name = "Alice Savoie", email = "alice@jobjects.org", url = "https://github.com/mpatron/myws2"),
