@@ -5,7 +5,6 @@ import javax.ws.rs.container.DynamicFeature;
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.FeatureContext;
 import javax.ws.rs.ext.Provider;
-import org.jobjects.myws2.rest.tools.TrafficLogger;
 
 @Provider
 public class LoggerRegistration implements DynamicFeature {

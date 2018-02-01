@@ -1,4 +1,4 @@
-package org.jobjects.myws2.rest.tools;
+package org.jobjects.myws2.tools;
 
 import java.util.HashSet;
 import java.util.Set;

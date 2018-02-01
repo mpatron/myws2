@@ -1,4 +1,4 @@
-package org.jobjects.myws2.rest.tools;
+package org.jobjects.myws2.tools;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -21,7 +21,6 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.Provider;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.jobjects.myws2.tools.Tracked;
 
 /**
  * @author MPT
