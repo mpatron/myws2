@@ -2,6 +2,7 @@ package org.jobjects.myws2.tools;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.EntityManager;
 
 /**
  * Classe générique pour manipuler les entity.
@@ -12,6 +13,9 @@ import java.util.List;
  *          En paramètre le nom de la class Entity
  */
 public interface Facade<T extends AbstractUUIDBaseEntity & Serializable> {
+  
+  EntityManager getEntityManager();
+  
   /**
    * Création dans la table, INSERT.
    * @param entity
