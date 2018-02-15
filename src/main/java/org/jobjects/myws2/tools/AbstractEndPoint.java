@@ -37,8 +37,7 @@ public class AbstractEndPoint<T extends AbstractUUIDBaseEntity & Serializable> {
    * Classe de l'entity.
    */
   private Class<T> entityClass;
-  // Facade<T> facade;
-  Facade<T> facade;
+  private Facade<T> facade;
 
   public void setFacade(Facade<T> facade) {
     this.facade = facade;
@@ -163,9 +162,6 @@ public class AbstractEndPoint<T extends AbstractUUIDBaseEntity & Serializable> {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public Response findAll() {
-    
-//    Query query = facade.getEntityManager().createNamedQuery(entityClass.getSimpleName() + ".findAll");
-//    List<T> list = query.getResultList();
     List<T> list = facade.findAll();
     GenericEntity<List<T>> restEntity = new GenericEntity<List<T>>(list){};
     return Response.ok(restEntity).build();
