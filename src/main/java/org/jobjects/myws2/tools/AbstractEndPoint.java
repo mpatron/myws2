@@ -5,29 +5,27 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Logger;
-import javax.persistence.Query;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.ValidatorFactory;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
-import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-@Tracked
 public class AbstractEndPoint<T extends AbstractUUIDBaseEntity & Serializable> {
   /**
    * Instance du logger.
@@ -38,6 +36,9 @@ public class AbstractEndPoint<T extends AbstractUUIDBaseEntity & Serializable> {
    */
   private Class<T> entityClass;
   private Facade<T> facade;
+  
+  @Context
+  UriInfo uriInfo;
 
   public void setFacade(Facade<T> facade) {
     this.facade = facade;
@@ -70,12 +71,12 @@ public class AbstractEndPoint<T extends AbstractUUIDBaseEntity & Serializable> {
     if (!isValid(entity)) {
       return Response.status(Response.Status.BAD_REQUEST)
           // 400
-          .entity(entity).header("Location", "http://localhost:8880/api/users").build();
+          .entity(entity).header("Location", uriInfo.getAbsolutePath() /*"http://localhost:8880/api/users" */ ).build();
     }
     entity.setId(UUID.randomUUID());
     T returnValue = facade.save(entity);
     return Response.status(Response.Status.CREATED).entity(returnValue)
-        .header("Location", "http://localhost:8880/api/users/" + returnValue.getId()).build();
+        .header("Location", uriInfo.getAbsolutePath().toString() /*"http://localhost:8880/api/users/"*/ + returnValue.getId()).build();
   }
 
   @GET
@@ -116,23 +117,23 @@ public class AbstractEndPoint<T extends AbstractUUIDBaseEntity & Serializable> {
         T entitySaved = facade.create(entity);
         return Response.status(Response.Status.CREATED)
             // 201
-            .entity(entitySaved).header("Location", "http://localhost:8880/api/users/" + entitySaved.getId()).build();
+            .entity(entitySaved).header("Location", uriInfo.getAbsolutePath().toString() /*"http://localhost:8880/api/users/"*/ + entitySaved.getId()).build();
       } else {
         /* Mise à jour */
         T entitySaved = facade.save(entity);
         return Response.status(Response.Status.OK)
             // 200
-            .entity(entitySaved).header("Location", "http://localhost:8880/api/users/" + entitySaved.getId()).build();
+            .entity(entitySaved).header("Location", uriInfo.getAbsolutePath().toString() /*"http://localhost:8880/api/users/"*/ + entitySaved.getId()).build();
       }
     } else {
       if (returnValue == null) {
         return Response.status(Response.Status.BAD_REQUEST)
             // 400
-            .entity("il faut mettre les erreurs 123456789").header("Location", "http://localhost:8880/api/users/" + entity.getId()).build();
+            .entity("il faut mettre les erreurs 123456789").header("Location", uriInfo.getAbsolutePath().toString() /*"http://localhost:8880/api/users/"*/ + entity.getId()).build();
       } else {
         return Response.status(Response.Status.CONFLICT)
             // 406
-            .entity("il faut mettre les erreurs 123456789").header("Location", "http://localhost:8880/api/users/" + entity.getId()).build();
+            .entity("il faut mettre les erreurs 123456789").header("Location", uriInfo.getAbsolutePath().toString() /*"http://localhost:8880/api/users/"*/ + entity.getId()).build();
       }
     }
   }

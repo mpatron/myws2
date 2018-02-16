@@ -47,7 +47,7 @@ public class AddressEndpointTest extends AbstractRemoteIT {
         returnValue.stream().parallel().forEach(u -> {
           LOGGER.info("User => " + ToStringBuilder.reflectionToString(u));
         });
-        Assert.assertTrue(returnValue.size() > 0);
+        Assert.assertTrue(returnValue.size() >= 0);
       } else {
         messageValidationError = "Return => Reason : HTTP[" + statusType.getStatusCode() + "] " + statusType.getReasonPhrase()
             + " Contenu : " + (response.bufferEntity() ? response.readEntity(String.class) : "<empty>");
