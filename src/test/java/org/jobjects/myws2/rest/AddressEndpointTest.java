@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
@@ -28,6 +29,32 @@ public class AddressEndpointTest extends AbstractRemoteIT {
   @ArquillianResource
   protected URL deployUrl;
 
+  public Address createUser(Address user) {
+    Address returnValue = null;
+    String messageValidationError = null;
+    try {
+      String url = deployUrl.toString().replace("8080", REDIRECT_PORT) + "api/address";
+      LOGGER.info("public void createUser() {} to " + url);
+      Client client = ClientBuilder.newClient();
+      WebTarget webTarget = client.target(url);
+      Response response = webTarget.request().post(Entity.json(user));
+      StatusType statusType = response.getStatusInfo();
+      if (Response.Status.Family.SUCCESSFUL.equals(Response.Status.Family.familyOf(statusType.getStatusCode()))) {
+        returnValue = response.readEntity(new GenericType<Address>() {
+        });
+        LOGGER.info("Return => " + returnValue);
+      } else {
+        messageValidationError = "Return => Reason : HTTP[" + statusType.getStatusCode() + "] " + statusType.getReasonPhrase()
+            + " Contenu : " + (response.bufferEntity() ? response.readEntity(String.class) : "<empty>");
+        LOGGER.log(Level.WARNING, messageValidationError);
+      }
+    } catch (Throwable e) {
+      LOGGER.log(Level.SEVERE, e.getMessage(), e);
+      Assert.assertTrue(false);
+    }
+    return returnValue;
+  }
+  
   @Test
   @RunAsClient
   public void testReadIntegerInteger() {

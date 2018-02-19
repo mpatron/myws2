@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.jobjects.myws2.orm.user.User;
 import org.jobjects.myws2.orm.validator.ValidStringCountryISO2;
@@ -48,7 +49,9 @@ public class Address extends AbstractUUIDBaseEntity implements Serializable {
   @Size(max = 40, message = "La longueur de city est inférieur à 40 caractères.")
   private String city;
   @ValidStringCountryISO2
-  @Size(max = 2, message = "La longueur de state est inférieur à 2 caractères.")
+  @Size(max = 2, message = "La longueur de stateCode est inférieur à 2 caractères.")
+  private String stateCode;
+  @Size(max = 80, message = "La longueur de state est inférieur à 80 caractères.")
   private String state;
   @Size(max = 20, message = "La longueur de postcode est inférieur à 20 caractères.")
   private String postcode;
@@ -57,6 +60,7 @@ public class Address extends AbstractUUIDBaseEntity implements Serializable {
   @JoinColumn(
       name = "USER_UUID_ID",
       nullable = false) /* UUID_ID vient de user */
+  @NotNull(message="Pas d'adresse sans utilisateur.")
   private User user;
 
   /**
@@ -105,18 +109,18 @@ public class Address extends AbstractUUIDBaseEntity implements Serializable {
   }
 
   /**
-   * @return the state
+   * @return the stateCode
    */
-  public final String getState() {
-    return state;
+  public final String getStateCode() {
+    return stateCode;
   }
 
   /**
    * @param state
-   *          the state to set
+   *          the stateCode to set
    */
-  public void setState(final String state) {
-    this.state = state;
+  public void setStateCode(final String stateCode) {
+    this.stateCode = stateCode;
   }
 
   /**
@@ -125,6 +129,22 @@ public class Address extends AbstractUUIDBaseEntity implements Serializable {
   public String getPostcode() {
     return postcode;
   }
+
+  /**
+   * @return the state
+   */
+  public String getState() {
+    return state;
+  }
+
+  /**
+   * @param state
+   *          the state to set
+   */
+  public void setState(String state) {
+    this.state = state;
+  }
+
 
   /**
    * @param postcode

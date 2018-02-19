@@ -24,6 +24,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
+import org.jobjects.myws2.orm.address.Address;
+import org.jobjects.myws2.orm.address.AddressEnum;
 import org.jobjects.myws2.orm.user.JSonImpTest;
 import org.jobjects.myws2.orm.user.User;
 import org.jobjects.myws2.tools.arquillian.AbstractRemoteIT;
@@ -92,7 +94,7 @@ public class UserEndpointTest extends AbstractRemoteIT {
     return returnValue;
   }
 
-  private User createUser(User user) {
+  public User createUser(User user) {
     User returnValue = null;
     String messageValidationError = null;
     try {
@@ -104,6 +106,32 @@ public class UserEndpointTest extends AbstractRemoteIT {
       StatusType statusType = response.getStatusInfo();
       if (Response.Status.Family.SUCCESSFUL.equals(Response.Status.Family.familyOf(statusType.getStatusCode()))) {
         returnValue = response.readEntity(new GenericType<User>() {
+        });
+        LOGGER.info("Return => " + returnValue);
+      } else {
+        messageValidationError = "Return => Reason : HTTP[" + statusType.getStatusCode() + "] " + statusType.getReasonPhrase()
+            + " Contenu : " + (response.bufferEntity() ? response.readEntity(String.class) : "<empty>");
+        LOGGER.log(Level.WARNING, messageValidationError);
+      }
+    } catch (Throwable e) {
+      LOGGER.log(Level.SEVERE, e.getMessage(), e);
+      Assert.assertTrue(false);
+    }
+    return returnValue;
+  }
+  
+  public Address createAddress(Address user) {
+    Address returnValue = null;
+    String messageValidationError = null;
+    try {
+      String url = deployUrl.toString().replace("8080", REDIRECT_PORT) + "api/address";
+      LOGGER.info("public void createUser() {} to " + url);
+      Client client = ClientBuilder.newClient();
+      WebTarget webTarget = client.target(url);
+      Response response = webTarget.request().post(Entity.json(user));
+      StatusType statusType = response.getStatusInfo();
+      if (Response.Status.Family.SUCCESSFUL.equals(Response.Status.Family.familyOf(statusType.getStatusCode()))) {
+        returnValue = response.readEntity(new GenericType<Address>() {
         });
         LOGGER.info("Return => " + returnValue);
       } else {
@@ -134,7 +162,16 @@ public class UserEndpointTest extends AbstractRemoteIT {
           user.setFirstName(name.getString("first"));
           user.setLastName(name.getString("last"));
           user.setEmail(prof.getString("email"));
-          createUser(user);
+          user = createUser(user);
+          JsonObject location = prof.getJsonObject("location");
+          Address address =  new Address();
+          address.setType(AddressEnum.HOME);
+          address.setStreet(location.getString("street"));
+          address.setCity(location.getString("city"));
+          address.setState(location.getString("state"));
+          address.setPostcode(Integer.toString(location.getInt("postcode")) );
+          address.setUser(user);
+          createAddress(address);
         }
       });
     } catch (Exception e) {
