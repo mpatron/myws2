@@ -60,7 +60,7 @@ public class AbstractEndPoint<T extends AbstractUUIDBaseEntity & Serializable> {
     LOGGER.info(ReflectionToStringBuilder.toString(entity, ToStringStyle.SHORT_PREFIX_STYLE));
     Set<ConstraintViolation<T>> errors = factory.getValidator().validate(entity);
     for (ConstraintViolation<T> error : errors) {
-      LOGGER.severe(ReflectionToStringBuilder.toString(error.getRootBean(), ToStringStyle.SHORT_PREFIX_STYLE) + " " + error.getMessage()
+      LOGGER.severe("AbstractEndPoint.isValid => "+ReflectionToStringBuilder.toString(error.getRootBean(), ToStringStyle.SHORT_PREFIX_STYLE) + " " + error.getMessage()
           + " due to " + error.getInvalidValue());
     }
     return (errors.size() == 0);
@@ -71,6 +71,7 @@ public class AbstractEndPoint<T extends AbstractUUIDBaseEntity & Serializable> {
   @Produces(MediaType.APPLICATION_JSON)
   public Response create(T entity) {
     if (!isValid(entity)) {
+      LOGGER.warning("AbstractEndPoint.create");
       return Response.status(Response.Status.BAD_REQUEST)
           // 400
           .entity(entity).header("Location", uriInfo.getAbsolutePath() /*"http://localhost:8880/api/users" */ ).build();

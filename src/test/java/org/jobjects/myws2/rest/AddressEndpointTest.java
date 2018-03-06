@@ -1,9 +1,17 @@
 package org.jobjects.myws2.rest;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -16,8 +24,13 @@ import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jobjects.myws2.orm.address.Address;
+import org.jobjects.myws2.orm.address.AddressEnum;
+import org.jobjects.myws2.orm.user.JSonImpTest;
+import org.jobjects.myws2.orm.user.User;
 import org.jobjects.myws2.tools.arquillian.AbstractRemoteIT;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -29,7 +42,85 @@ public class AddressEndpointTest extends AbstractRemoteIT {
   @ArquillianResource
   protected URL deployUrl;
 
-  public Address createUser(Address user) {
+  private User findUser(String email) {
+    User returnValue = null;
+    String messageValidationError = null;
+    try {
+      String url = deployUrl.toString().replace("8080", REDIRECT_PORT) + "api/users/byemail/" + URLEncoder.encode(email, "UTF-8");
+      LOGGER.info("public void testReadIntegerInteger() {} to " + url);
+      Client client = ClientBuilder.newClient();
+      WebTarget webTarget = client.target(url).queryParam("email", email);
+      Response response = webTarget.request().get();
+      StatusType statusType = response.getStatusInfo();
+      if (Response.Status.Family.SUCCESSFUL.equals(Response.Status.Family.familyOf(statusType.getStatusCode()))) {
+        returnValue = response.readEntity(new GenericType<User>() {
+        });
+        LOGGER.info("Return => " + returnValue);
+      } else {
+        messageValidationError = "Return => Reason : HTTP[" + statusType.getStatusCode() + "] " + statusType.getReasonPhrase()
+            + " Contenu : " + (response.bufferEntity() ? response.readEntity(String.class) : "<empty>");
+        LOGGER.log(Level.WARNING, messageValidationError);
+      }
+    } catch (Throwable e) {
+      LOGGER.log(Level.SEVERE, e.getMessage(), e);
+      Assert.assertTrue(false);
+    }
+    return returnValue;
+  }
+
+  private User getUser(UUID id) {
+    User returnValue = null;
+    String messageValidationError = null;
+    try {
+      String url = deployUrl.toString().replace("8080", REDIRECT_PORT) + "api/users/" + URLEncoder.encode(id.toString(), "UTF-8");
+      LOGGER.info("public void testReadIntegerInteger() {} to " + url);
+      Client client = ClientBuilder.newClient();
+      WebTarget webTarget = client.target(url);
+      Response response = webTarget.request().get();
+      StatusType statusType = response.getStatusInfo();
+      if (Response.Status.Family.SUCCESSFUL.equals(Response.Status.Family.familyOf(statusType.getStatusCode()))) {
+        returnValue = response.readEntity(new GenericType<User>() {
+        });
+        LOGGER.info("Return => " + returnValue);
+      } else {
+        messageValidationError = "Return => Reason : HTTP[" + statusType.getStatusCode() + "] " + statusType.getReasonPhrase()
+            + " Contenu : " + (response.bufferEntity() ? response.readEntity(String.class) : "<empty>");
+        LOGGER.log(Level.WARNING, messageValidationError);
+      }
+    } catch (Throwable e) {
+      LOGGER.log(Level.SEVERE, e.getMessage(), e);
+      Assert.assertTrue(false);
+    }
+    return returnValue;
+  }
+
+  public User createUser(User user) {
+    User returnValue = null;
+    String messageValidationError = null;
+    try {
+      String url = deployUrl.toString().replace("8080", REDIRECT_PORT) + "api/users";
+      LOGGER.info("public void createUser() {} to " + url);
+      Client client = ClientBuilder.newClient();
+      WebTarget webTarget = client.target(url);
+      Response response = webTarget.request().post(Entity.json(user));
+      StatusType statusType = response.getStatusInfo();
+      if (Response.Status.Family.SUCCESSFUL.equals(Response.Status.Family.familyOf(statusType.getStatusCode()))) {
+        returnValue = response.readEntity(new GenericType<User>() {
+        });
+        LOGGER.info("Return => " + returnValue);
+      } else {
+        messageValidationError = "Return => Reason : HTTP[" + statusType.getStatusCode() + "] " + statusType.getReasonPhrase()
+            + " Contenu : " + (response.bufferEntity() ? response.readEntity(String.class) : "<empty>");
+        LOGGER.log(Level.WARNING, messageValidationError);
+      }
+    } catch (Throwable e) {
+      LOGGER.log(Level.SEVERE, e.getMessage(), e);
+      Assert.assertTrue(false);
+    }
+    return returnValue;
+  }
+  
+  public Address createAddress(Address user) {
     Address returnValue = null;
     String messageValidationError = null;
     try {
@@ -54,7 +145,42 @@ public class AddressEndpointTest extends AbstractRemoteIT {
     }
     return returnValue;
   }
-  
+
+
+  @Before
+  public void beforeClass() {
+    final String filePathname = "/org/jobjects/myws2/rest/random-users.json";
+    try (BufferedReader in = new BufferedReader(new InputStreamReader(JSonImpTest.class.getResourceAsStream(filePathname), "UTF-8"));) {
+      JsonReader parser = Json.createReader(in);
+      JsonObject jsonObject = parser.readObject();
+      JsonArray results = jsonObject.getJsonArray("results");
+      results.stream().forEach(obj -> {
+        JsonObject prof = (JsonObject) obj;
+        JsonObject name = prof.getJsonObject("name");
+        User user;
+        user = findUser(prof.getString("email"));
+        if (user == null) {
+          user = new User();
+          user.setFirstName(name.getString("first"));
+          user.setLastName(name.getString("last"));
+          user.setEmail(prof.getString("email"));
+          user = createUser(user);
+          JsonObject location = prof.getJsonObject("location");
+          Address address = new Address();
+          address.setType(AddressEnum.HOME);
+          address.setStreet(location.getString("street"));
+          address.setCity(location.getString("city"));
+          address.setState(location.getString("state"));
+          address.setPostcode(Integer.toString(location.getInt("postcode")));
+          address.setUser(user);
+          createAddress(address);
+        }
+      });
+    } catch (Exception e) {
+      LOGGER.log(Level.SEVERE, e.getLocalizedMessage(), e);
+    }
+  }
+
   @Test
   @RunAsClient
   public void testReadIntegerInteger() {
