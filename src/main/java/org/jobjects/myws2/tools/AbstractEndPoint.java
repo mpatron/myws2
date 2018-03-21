@@ -24,6 +24,7 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -66,6 +67,23 @@ public class AbstractEndPoint<T extends AbstractUUIDBaseEntity & Serializable> {
     return (errors.size() == 0);
   }
 
+  private String getValidationMessages(T entity) {
+    StringBuffer returnValue = new StringBuffer();
+    ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+    LOGGER.info(ReflectionToStringBuilder.toString(entity, ToStringStyle.SHORT_PREFIX_STYLE));
+    Set<ConstraintViolation<T>> errors = factory.getValidator().validate(entity);
+    if(errors.size() > 0) {
+      returnValue.append("Invalide : "+ReflectionToStringBuilder.toString(entity, ToStringStyle.SHORT_PREFIX_STYLE));
+      returnValue.append(System.lineSeparator());
+      for (ConstraintViolation<T> error : errors) {
+        returnValue.append("    - " + error.getPropertyPath() + "="  + error.getInvalidValue() + " : "+ error.getMessage());
+        returnValue.append(System.lineSeparator());
+      }
+    }
+    return returnValue.toString();
+  }
+
+
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
@@ -74,7 +92,7 @@ public class AbstractEndPoint<T extends AbstractUUIDBaseEntity & Serializable> {
       LOGGER.warning("AbstractEndPoint.create");
       return Response.status(Response.Status.BAD_REQUEST)
           // 400
-          .entity(entity).header("Location", uriInfo.getAbsolutePath() /*"http://localhost:8880/api/users" */ ).build();
+          .entity(getValidationMessages(entity)).header("Location", uriInfo.getAbsolutePath() /*"http://localhost:8880/api/users" */ ).build();
     }
     entity.setId(UUID.randomUUID());
     T returnValue = facade.save(entity);
@@ -106,11 +124,14 @@ public class AbstractEndPoint<T extends AbstractUUIDBaseEntity & Serializable> {
       if (returnValue == null) {
         return Response.status(Response.Status.BAD_REQUEST)
             // 400
-            .entity("il faut mettre les erreurs 123456789").header("Location", uriInfo.getAbsolutePath().toString() /*"http://localhost:8880/api/users/"*/ + entity.getId()).build();
+            //.entity("il faut mettre les erreurs 123456789").header("Location", uriInfo.getAbsolutePath().toString() /*"http://localhost:8880/api/users/"*/ + entity.getId()).build();
+            .entity(getValidationMessages(entity)).header("Location", uriInfo.getAbsolutePath().toString() /*"http://localhost:8880/api/users/"*/ + entity.getId()).build();
+        
       } else {
         return Response.status(Response.Status.CONFLICT)
             // 406
-            .entity("il faut mettre les erreurs 123456789").header("Location", uriInfo.getAbsolutePath().toString() /*"http://localhost:8880/api/users/"*/ + entity.getId()).build();
+            //.entity("il faut mettre les erreurs 123456789").header("Location", uriInfo.getAbsolutePath().toString() /*"http://localhost:8880/api/users/"*/ + entity.getId()).build();
+            .entity(getValidationMessages(entity)).header("Location", uriInfo.getAbsolutePath().toString() /*"http://localhost:8880/api/users/"*/ + entity.getId()).build();
       }
     }
   }
@@ -163,13 +184,14 @@ public class AbstractEndPoint<T extends AbstractUUIDBaseEntity & Serializable> {
    * j2ee rest annotation generic
    * https://stackoverflow.com/questions/15408337/using-java-generics-template-type-in-restful-response-object-via-genericentityl
    */
-  @GET
-  @Produces(MediaType.APPLICATION_JSON)
-  public Response findAll() {
-    List<T> list = facade.findAll();
-    GenericEntity<List<T>> restEntity = new GenericEntity<List<T>>(list){};
-    return Response.ok(restEntity).build();
-  }
+//  Indentique à readall car même implémentation
+//  @GET
+//  @Produces(MediaType.APPLICATION_JSON)
+//  public Response findAll() {
+//    List<T> list = facade.findAll();
+//    GenericEntity<List<T>> restEntity = new GenericEntity<List<T>>(list){};
+//    return Response.ok(restEntity).build();
+//  }
   
   /**
    * search

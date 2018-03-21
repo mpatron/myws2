@@ -120,7 +120,7 @@ public class AddressEndpointTest extends AbstractRemoteIT {
     return returnValue;
   }
   
-  public Address createAddress(Address user) {
+  public Address createAddress(Address address) {
     Address returnValue = null;
     String messageValidationError = null;
     try {
@@ -128,7 +128,7 @@ public class AddressEndpointTest extends AbstractRemoteIT {
       LOGGER.info("public void createUser() {} to " + url);
       Client client = ClientBuilder.newClient();
       WebTarget webTarget = client.target(url);
-      Response response = webTarget.request().post(Entity.json(user));
+      Response response = webTarget.request().post(Entity.json(address));
       StatusType statusType = response.getStatusInfo();
       if (Response.Status.Family.SUCCESSFUL.equals(Response.Status.Family.familyOf(statusType.getStatusCode()))) {
         returnValue = response.readEntity(new GenericType<Address>() {

@@ -5,6 +5,8 @@ import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 import org.jobjects.myws2.rest.AddressEndpoint;
+import org.jobjects.myws2.rest.AddressReader;
+import org.jobjects.myws2.rest.AddressWriter;
 import org.jobjects.myws2.rest.HelloWorldEndpoint;
 import org.jobjects.myws2.rest.MyBeanReader;
 import org.jobjects.myws2.rest.MyBeanWriter;
@@ -59,6 +61,8 @@ public class RestApplicationConfiguration extends Application {
     resources.add(MyBeanWriter.class);
     resources.add(MyBeanReader.class);    
     resources.add(AddressEndpoint.class);
+    resources.add(AddressWriter.class);
+    resources.add(AddressReader.class);
     /**
      * Activation de la génération de swagger.json
      * http://localhost:8880/api/swagger.json
