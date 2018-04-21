@@ -106,7 +106,8 @@ public class TrafficLogger implements ContainerRequestFilter, ContainerResponseF
       case RESPONSE:
         if (responseContext.hasEntity()) {
           String bodyValue = null;
-          bodyValue = Objects.toString(responseContext.getEntity());
+          //bodyValue = Objects.toString(responseContext.getEntity());
+          bodyValue = responseContext.getEntity().toString();
           json.add("BodyResponse", StringUtils.isBlank(bodyValue) ? "<empty>" : bodyValue);        
         }
         break;

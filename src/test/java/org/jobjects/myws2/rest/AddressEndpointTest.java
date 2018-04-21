@@ -12,6 +12,7 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
+import javax.json.JsonValue;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -155,25 +156,27 @@ public class AddressEndpointTest extends AbstractRemoteIT {
       JsonObject jsonObject = parser.readObject();
       JsonArray results = jsonObject.getJsonArray("results");
       results.stream().forEach(obj -> {
-        JsonObject prof = (JsonObject) obj;
-        JsonObject name = prof.getJsonObject("name");
-        User user;
-        user = findUser(prof.getString("email"));
-        if (user == null) {
-          user = new User();
-          user.setFirstName(name.getString("first"));
-          user.setLastName(name.getString("last"));
-          user.setEmail(prof.getString("email"));
-          user = createUser(user);
-          JsonObject location = prof.getJsonObject("location");
-          Address address = new Address();
-          address.setType(AddressEnum.HOME);
-          address.setStreet(location.getString("street"));
-          address.setCity(location.getString("city"));
-          address.setState(location.getString("state"));
-          address.setPostcode(Integer.toString(location.getInt("postcode")));
-          address.setUser(user);
-          createAddress(address);
+        if (JsonValue.ValueType.OBJECT == obj.getValueType() ) {
+          JsonObject jsonObjectValue = (JsonObject) obj;  
+          JsonObject name = jsonObjectValue.getJsonObject("name");
+          User user;
+          user = findUser(jsonObjectValue.getString("email"));
+          if (user == null) {
+            user = new User();
+            user.setFirstName(name.getString("first"));
+            user.setLastName(name.getString("last"));
+            user.setEmail(jsonObjectValue.getString("email"));
+            user = createUser(user);
+            JsonObject location = jsonObjectValue.getJsonObject("location");
+            Address address = new Address();
+            address.setType(AddressEnum.HOME);
+            address.setStreet(location.getString("street"));
+            address.setCity(location.getString("city"));
+            address.setState(location.getString("state"));
+            address.setPostcode(Integer.toString(location.getInt("postcode")));
+            address.setUser(user);
+            createAddress(address);
+          }
         }
       });
     } catch (Exception e) {

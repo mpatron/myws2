@@ -9,7 +9,7 @@
 	<packaging>war</packaging>
 
 	<properties>
-		<version.wildfly.swarm>2018.3.3</version.wildfly.swarm>
+		<version.wildfly.swarm>2018.4.1</version.wildfly.swarm>
 		<version.h2>1.4.187</version.h2>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -102,7 +102,7 @@
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>
 			<artifactId>swagger-webapp</artifactId>
-			<version>2018.1.0</version>
+			<version>2018.4.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.wildfly.swarm</groupId>

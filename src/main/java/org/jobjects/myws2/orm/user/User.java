@@ -134,15 +134,15 @@ public class User extends AbstractUUIDBaseEntity implements Serializable {
    */
   @Override
   public String toString() {
-    // StringBuilder builder = new StringBuilder();
-    // builder.append("User [firstName=");
-    // builder.append(firstName);
-    // builder.append(", lastName=");
-    // builder.append(lastName);
-    // builder.append(", email=");
-    // builder.append(email);
-    // builder.append("]");
-    // return builder.toString();
-    return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+//     StringBuilder builder = new StringBuilder();
+//     builder.append("User [firstName=");
+//     builder.append(firstName);
+//     builder.append(", lastName=");
+//     builder.append(lastName);
+//     builder.append(", email=");
+//     builder.append(email);
+//     builder.append("]");
+//     return builder.toString();
+    return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE, false);
   }
 }

@@ -14,6 +14,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.jobjects.myws2.orm.user.User;
 import org.jobjects.myws2.orm.validator.ValidStringCountryISO2;
 import org.jobjects.myws2.tools.AbstractUUIDBaseEntity;
@@ -60,7 +62,7 @@ public class Address extends AbstractUUIDBaseEntity implements Serializable {
   @JoinColumn(
       name = "USER_UUID_ID",
       nullable = false) /* UUID_ID vient de user */
-  @NotNull(message="Pas d'adresse sans utilisateur.")
+  @NotNull(message = "Pas d'adresse sans utilisateur.")
   private User user;
 
   /**
@@ -145,7 +147,6 @@ public class Address extends AbstractUUIDBaseEntity implements Serializable {
     this.state = state;
   }
 
-
   /**
    * @param postcode
    *          the postcode to set
@@ -167,5 +168,10 @@ public class Address extends AbstractUUIDBaseEntity implements Serializable {
    */
   public void setUser(User user) {
     this.user = user;
+  }
+
+  @Override
+  public String toString() {
+    return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE, false);
   }
 }
