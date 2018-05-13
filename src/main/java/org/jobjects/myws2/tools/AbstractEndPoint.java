@@ -65,7 +65,7 @@ public class AbstractEndPoint<T extends AbstractUUIDBaseEntity & Serializable> {
     this.entityClass = entityClasse;
   }
 
-  public boolean isValid(T entity) {
+  public boolean isValid(final T entity) {
     ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
     LOGGER.info(ReflectionToStringBuilder.toString(entity, ToStringStyle.SHORT_PREFIX_STYLE));
     Set<ConstraintViolation<T>> errors = factory.getValidator().validate(entity);
@@ -76,7 +76,7 @@ public class AbstractEndPoint<T extends AbstractUUIDBaseEntity & Serializable> {
     return (errors.size() == 0);
   }
 
-  public String getValidationMessages(T entity) {
+  public String getValidationMessages(final T entity) {
     StringBuffer returnValue = new StringBuffer();
     ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
     LOGGER.info(ReflectionToStringBuilder.toString(entity, ToStringStyle.SHORT_PREFIX_STYLE));
@@ -96,7 +96,7 @@ public class AbstractEndPoint<T extends AbstractUUIDBaseEntity & Serializable> {
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response create(T entity) {
+  public Response create(final T entity) {
     if (!isValid(entity)) {
       LOGGER.warning("AbstractEndPoint.create");
       return Response.status(Response.Status.BAD_REQUEST)
@@ -113,7 +113,7 @@ public class AbstractEndPoint<T extends AbstractUUIDBaseEntity & Serializable> {
   @Path("{id:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}}")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response update(@PathParam("id") UUID id, T entity) throws WebApplicationException {
+  public Response update(@PathParam("id") final UUID id, final T entity) throws WebApplicationException {
     T returnValue = facade.find(id);
     if (isValid(entity)) {
       if (returnValue == null) {
@@ -147,7 +147,7 @@ public class AbstractEndPoint<T extends AbstractUUIDBaseEntity & Serializable> {
   @Path("{id}")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response delete(@PathParam("id") UUID id) throws WebApplicationException {
+  public Response delete(@PathParam("id") final UUID id) throws WebApplicationException {
     T returnValue = facade.find(id);
     if (returnValue == null) {
       LOGGER.info(entityClass.getSimpleName() + " => NOT_FOUND");
@@ -165,7 +165,7 @@ public class AbstractEndPoint<T extends AbstractUUIDBaseEntity & Serializable> {
   @Path("{id:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}}")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response read(@PathParam("id") UUID id) {
+  public Response read(@PathParam("id") final UUID id) {
     LOGGER.info("public Response read(@PathParam(\"id\") UUID " + id + ")");
     T returnValue = facade.find(id);
     return Response.status(200).entity(returnValue).header("Access-Control-Allow-Headers", "X-extra-header").allow("OPTIONS").build();
@@ -179,8 +179,8 @@ public class AbstractEndPoint<T extends AbstractUUIDBaseEntity & Serializable> {
    */
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public List<T> readall(@DefaultValue("0") @QueryParam("rangeMin") Integer rangeMin,
-      @DefaultValue("" + Integer.MAX_VALUE) @QueryParam("rangeMax") Integer rangeMax) throws WebApplicationException {
+  public List<T> readall(@DefaultValue("0") @QueryParam("rangeMin") final Integer rangeMin,
+      @DefaultValue("" + Integer.MAX_VALUE) @QueryParam("rangeMax") final Integer rangeMax) throws WebApplicationException {
     LOGGER.info("public List<T> read(@QueryParam(\"rangeMin\") Integer \"" + rangeMin + "\", @QueryParam(\"rangeMax\") Integer \""
         + rangeMax + "\")");
     List<T> returnValue = facade.findRange(rangeMin, rangeMax);
