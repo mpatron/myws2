@@ -84,7 +84,7 @@ public class UserEndpoint {
   public Response read(@PathParam("id") UUID id) {
     LOGGER.info("public Response read(@PathParam(\"id\") UUID " + id + ")");
     User returnValue = facade.find(id);
-    return Response.status(200).entity(returnValue).header("Access-Control-Allow-Headers", "X-extra-header").allow("OPTIONS").build();
+    return Response.status(Response.Status.OK).entity(returnValue).header("Access-Control-Allow-Headers", "X-extra-header").allow("OPTIONS").build();
   }
 
   @GET
@@ -95,7 +95,7 @@ public class UserEndpoint {
   public Response readbyemil(@PathParam("email") String email) {
     LOGGER.info("public Response read(@PathParam(\"email\") String " + email + ")");
     User returnValue = facade.findByEmail(email);
-    return Response.status(200).entity(returnValue).header("Access-Control-Allow-Headers", "X-extra-header").allow("OPTIONS").build();
+    return Response.status(Response.Status.OK).entity(returnValue).header("Access-Control-Allow-Headers", "X-extra-header").allow("OPTIONS").build();
   }
 
   /**
