@@ -188,8 +188,13 @@ public class AbstractEndPoint<T extends AbstractUUIDBaseEntity & Serializable> {
     try {
       LOGGER.info("public Response read(@PathParam(\"id\") UUID " + id + ")");
       T newEntity = facade.find(id);
-      returnValue = Response.status(Response.Status.OK).entity(newEntity).header("Access-Control-Allow-Headers", "X-extra-header")
-          .allow("OPTIONS").build();
+      if (null == newEntity) {
+        returnValue = Response.status(Response.Status.NO_CONTENT).header("Access-Control-Allow-Headers", "X-extra-header")
+            .header("Location", uriInfo.getAbsolutePath().toString() + id).build();
+      } else {
+        returnValue = Response.status(Response.Status.OK).entity(newEntity).header("Access-Control-Allow-Headers", "X-extra-header")
+            .header("Location", uriInfo.getAbsolutePath().toString() + id).allow("OPTIONS").build();
+      }
     } catch (Exception e) {
       LOGGER.log(Level.SEVERE, e.getLocalizedMessage(), e);
     }

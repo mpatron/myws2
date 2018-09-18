@@ -6,6 +6,7 @@ package org.jobjects.myws2.rest;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.validation.ConstraintViolation;
@@ -22,8 +23,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -48,6 +51,8 @@ public class UserEndpoint {
   private transient Logger LOGGER = Logger.getLogger(getClass().getName());
   @EJB
   UserFacade facade;
+  @Context
+  UriInfo uriInfo;
 
   private boolean isValid(User user) {
     ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
@@ -68,12 +73,12 @@ public class UserEndpoint {
     if (!isValid(entity)) {
       return Response.status(Response.Status.BAD_REQUEST)
           // 400
-          .entity(entity).header("Location", "http://localhost:8880/api/users").build();
+          .entity(entity).header("Location", uriInfo.getAbsolutePath()).build();
     }
     entity.setId(UUID.randomUUID());
     User returnValue = facade.save(entity);
     return Response.status(Response.Status.CREATED).entity(returnValue)
-        .header("Location", "http://localhost:8880/api/users/" + returnValue.getId()).build();
+        .header("Location", uriInfo.getAbsolutePath().toString() + returnValue.getId()).build();
   }
 
   @GET
@@ -82,9 +87,20 @@ public class UserEndpoint {
   @Produces(MediaType.APPLICATION_JSON)
   @ApiOperation(value = "Get the user by id", notes = "Returns the user as a json", response = User.class)
   public Response read(@PathParam("id") UUID id) {
-    LOGGER.info("public Response read(@PathParam(\"id\") UUID " + id + ")");
-    User returnValue = facade.find(id);
-    return Response.status(Response.Status.OK).entity(returnValue).header("Access-Control-Allow-Headers", "X-extra-header").allow("OPTIONS").build();
+    Response returnValue = Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+    try {
+      LOGGER.info("public Response read(@PathParam(\"id\") UUID " + id + ")");
+      User newEntity = facade.find(id);
+      if(null==newEntity) {
+        returnValue = Response.status(Response.Status.NO_CONTENT).header("Location", uriInfo.getAbsolutePath().toString() + id).build();
+      } else {
+        returnValue = Response.status(Response.Status.OK).entity(newEntity).header("Access-Control-Allow-Headers", "X-extra-header")
+            .header("Location", uriInfo.getAbsolutePath().toString() + id).allow("OPTIONS").build();
+      }
+    } catch (Exception e) {
+      LOGGER.log(Level.SEVERE, e.getLocalizedMessage(), e);
+    }
+    return returnValue;
   }
 
   @GET
@@ -95,7 +111,8 @@ public class UserEndpoint {
   public Response readbyemil(@PathParam("email") String email) {
     LOGGER.info("public Response read(@PathParam(\"email\") String " + email + ")");
     User returnValue = facade.findByEmail(email);
-    return Response.status(Response.Status.OK).entity(returnValue).header("Access-Control-Allow-Headers", "X-extra-header").allow("OPTIONS").build();
+    return Response.status(Response.Status.OK).entity(returnValue).header("Access-Control-Allow-Headers", "X-extra-header")
+        .header("Location", uriInfo.getAbsolutePath().toString() + email).allow("OPTIONS").build();
   }
 
   /**
@@ -105,7 +122,7 @@ public class UserEndpoint {
    * @throws WebApplicationException
    */
   @GET
-  //@Path("/all")
+  // @Path("/all")
   @Produces(MediaType.APPLICATION_JSON)
   @ApiOperation(value = "Get all users", notes = "Returns the user list as a json", response = List.class)
   public List<User> readall(
@@ -118,8 +135,7 @@ public class UserEndpoint {
           defaultValue = "\"" + Integer.MAX_VALUE + "\"",
           name = "rangeMax",
           required = false,
-          example = "" + Integer.MAX_VALUE) @DefaultValue(""
-              + Integer.MAX_VALUE) @QueryParam("rangeMax") Integer rangeMax)
+          example = "" + Integer.MAX_VALUE) @DefaultValue("" + Integer.MAX_VALUE) @QueryParam("rangeMax") Integer rangeMax)
       throws WebApplicationException {
     LOGGER.info("public List<User> read(@QueryParam(\"rangeMin\") Integer \"" + rangeMin + "\", @QueryParam(\"rangeMax\") Integer \""
         + rangeMax + "\")");
@@ -140,23 +156,25 @@ public class UserEndpoint {
         User entitySaved = facade.create(entity);
         return Response.status(Response.Status.CREATED)
             // 201
-            .entity(entitySaved).header("Location", "http://localhost:8880/api/users/" + entitySaved.getId()).build();
+            .entity(entitySaved).header("Location", uriInfo.getAbsolutePath().toString() + entitySaved.getId()).build();
       } else {
         /* Mise à jour */
         User entitySaved = facade.save(entity);
         return Response.status(Response.Status.OK)
             // 200
-            .entity(entitySaved).header("Location", "http://localhost:8880/api/users/" + entitySaved.getId()).build();
+            .entity(entitySaved).header("Location", uriInfo.getAbsolutePath().toString() + entitySaved.getId()).build();
       }
     } else {
       if (returnValue == null) {
         return Response.status(Response.Status.BAD_REQUEST)
             // 400
-            .entity("il faut mettre les erreurs 123456789").header("Location", "http://localhost:8880/api/users/" + entity.getId()).build();
+            .entity("il faut mettre les erreurs 123456789").header("Location", uriInfo.getAbsolutePath().toString() + entity.getId())
+            .build();
       } else {
         return Response.status(Response.Status.CONFLICT)
             // 406
-            .entity("il faut mettre les erreurs 123456789").header("Location", "http://localhost:8880/api/users/" + entity.getId()).build();
+            .entity("il faut mettre les erreurs 123456789").header("Location", uriInfo.getAbsolutePath().toString() + entity.getId())
+            .build();
       }
     }
   }
