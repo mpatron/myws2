@@ -29,12 +29,10 @@ import org.apache.commons.lang3.StringUtils;
 @Tracked
 @Provider
 public class TrafficLogger implements ContainerRequestFilter, ContainerResponseFilter {
-  
   private enum StateEnum {
     REQUEST, RESPONSE
   }
 
-  
   public TrafficLogger() {
     LOGGER.info("@Provider : TrafficLogger loading.....");
   }
@@ -79,7 +77,8 @@ public class TrafficLogger implements ContainerRequestFilter, ContainerResponseF
     }
   }
 
-  private JsonObjectBuilder containerRequestContextToJSON(ContainerRequestContext requestContext, ContainerResponseContext responseContext, StateEnum state) {
+  private JsonObjectBuilder containerRequestContextToJSON(ContainerRequestContext requestContext, ContainerResponseContext responseContext,
+      StateEnum state) {
     JsonObjectBuilder json = Json.createObjectBuilder();
     try {
       String userPrincipal = null;
@@ -93,29 +92,26 @@ public class TrafficLogger implements ContainerRequestFilter, ContainerResponseF
       if (uriInfo != null) {
         json.add("UriInfo", "" + uriInfo.getRequestUri().toString());
       }
-      
       switch (state) {
       case REQUEST:
         if (requestContext.hasEntity()) {
           String bodyValue = null;
           bodyValue = IOUtils.toString(requestContext.getEntityStream(), StandardCharsets.UTF_8);
           requestContext.setEntityStream(IOUtils.toInputStream(bodyValue, StandardCharsets.UTF_8));
-          json.add("BodyRequest", StringUtils.isBlank(bodyValue) ? "<empty>" : bodyValue);        
+          json.add("BodyRequest", StringUtils.isBlank(bodyValue) ? "<empty>" : bodyValue);
         }
         break;
       case RESPONSE:
         if (responseContext.hasEntity()) {
           String bodyValue = null;
-          //bodyValue = Objects.toString(responseContext.getEntity());
+          // bodyValue = Objects.toString(responseContext.getEntity());
           bodyValue = responseContext.getEntity().toString();
-          json.add("BodyResponse", StringUtils.isBlank(bodyValue) ? "<empty>" : bodyValue);        
+          json.add("BodyResponse", StringUtils.isBlank(bodyValue) ? "<empty>" : bodyValue);
         }
         break;
       default:
         break;
       }
-      
-      
       MultivaluedMap<String, String> headers = requestContext.getHeaders();
       JsonObjectBuilder jsonHeaders = Json.createObjectBuilder();
       for (Entry<String, List<String>> entry : headers.entrySet()) {

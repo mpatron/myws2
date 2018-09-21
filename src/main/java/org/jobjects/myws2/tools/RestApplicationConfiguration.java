@@ -54,12 +54,12 @@ public class RestApplicationConfiguration extends Application {
   public Set<Class<?>> getClasses() {
     Set<Class<?>> resources = new HashSet<>();
     resources.add(CORSFilter.class);
-    //resources.add(CustomRequestWrapperFilter.class);
+    // resources.add(CustomRequestWrapperFilter.class);
     resources.add(TrafficLogger.class);
     resources.add(HelloWorldEndpoint.class);
     resources.add(UserEndpoint.class);
     resources.add(MyBeanWriter.class);
-    resources.add(MyBeanReader.class);    
+    resources.add(MyBeanReader.class);
     resources.add(AddressEndpoint.class);
     resources.add(AddressWriter.class);
     resources.add(AddressReader.class);

@@ -91,7 +91,7 @@ public class UserEndpoint {
     try {
       LOGGER.info("public Response read(@PathParam(\"id\") UUID " + id + ")");
       User newEntity = facade.find(id);
-      if(null==newEntity) {
+      if (null == newEntity) {
         returnValue = Response.status(Response.Status.NO_CONTENT).header("Location", uriInfo.getAbsolutePath().toString() + id).build();
       } else {
         returnValue = Response.status(Response.Status.OK).entity(newEntity).header("Access-Control-Allow-Headers", "X-extra-header")

@@ -13,9 +13,8 @@ import javax.persistence.EntityManager;
  *          En paramètre le nom de la class Entity
  */
 public interface Facade<T extends AbstractUUIDBaseEntity & Serializable> {
-  
   EntityManager getEntityManager();
-  
+
   /**
    * Création dans la table, INSERT.
    * @param entity

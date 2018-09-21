@@ -58,36 +58,37 @@ public class AddressReader implements MessageBodyReader<Address> {
     } catch (Exception e) {
       throw new WebApplicationException(e);
     }
-//     try {
-//       instance = new Address();
-//       InputStreamReader reader = new InputStreamReader(in, "UTF-8");
-//       JsonReader jsonReader = Json.createReader(reader);
-//       JsonObject jsonObject = jsonReader.readObject();
-//       LOGGER.warning("AddressReader.jsonObject="+jsonObject);
-//       
-//       String uuid = jsonObject.getString("id", null);
-//       instance.setId(StringUtils.isNotEmpty(uuid)?UUID.fromString(uuid):null);
-//       instance.setType(AddressEnum.valueOf(jsonObject.getString("type", null)));
-//       instance.setStreet(jsonObject.getString("street", null));
-//       instance.setPostcode(jsonObject.getString("postcode", null));
-//       instance.setCity(jsonObject.getString("city", null));
-//       instance.setStateCode(jsonObject.getString("stateCode", null));
-//       instance.setState(jsonObject.getString("state", null));
-//
-//       JsonObject userJson = jsonObject.getJsonObject("user");
-//       User user = new User();
-//       String userUuid = userJson.getString("id", null);
-//       user.setId(StringUtils.isNotEmpty(userUuid)?UUID.fromString(userUuid):null);
-//       user.setFirstName(userJson.getString("firstName", null));
-//       user.setLastName(userJson.getString("lastName", null));
-//       user.setEmail(userJson.getString("email", null));
-//       user.setAddress(new ArrayList<Address>());
-//       
-//       instance.setUser(user);
-//       
-//     } catch (Exception e) {
-//       throw new WebApplicationException(e);
-//     }
+    // try {
+    // instance = new Address();
+    // InputStreamReader reader = new InputStreamReader(in, "UTF-8");
+    // JsonReader jsonReader = Json.createReader(reader);
+    // JsonObject jsonObject = jsonReader.readObject();
+    // LOGGER.warning("AddressReader.jsonObject="+jsonObject);
+    //
+    // String uuid = jsonObject.getString("id", null);
+    // instance.setId(StringUtils.isNotEmpty(uuid)?UUID.fromString(uuid):null);
+    // instance.setType(AddressEnum.valueOf(jsonObject.getString("type",
+    // null)));
+    // instance.setStreet(jsonObject.getString("street", null));
+    // instance.setPostcode(jsonObject.getString("postcode", null));
+    // instance.setCity(jsonObject.getString("city", null));
+    // instance.setStateCode(jsonObject.getString("stateCode", null));
+    // instance.setState(jsonObject.getString("state", null));
+    //
+    // JsonObject userJson = jsonObject.getJsonObject("user");
+    // User user = new User();
+    // String userUuid = userJson.getString("id", null);
+    // user.setId(StringUtils.isNotEmpty(userUuid)?UUID.fromString(userUuid):null);
+    // user.setFirstName(userJson.getString("firstName", null));
+    // user.setLastName(userJson.getString("lastName", null));
+    // user.setEmail(userJson.getString("email", null));
+    // user.setAddress(new ArrayList<Address>());
+    //
+    // instance.setUser(user);
+    //
+    // } catch (Exception e) {
+    // throw new WebApplicationException(e);
+    // }
     return instance;
   }
 }

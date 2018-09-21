@@ -11,17 +11,15 @@ import org.jobjects.myws2.tools.Tracked;
 @Tracked
 @Path("/address")
 public class AddressEndpoint extends AbstractEndPoint<Address> {
-
   @EJB
   protected AddressFacade facade;
-  
+
   public AddressEndpoint() {
     super(Address.class);
   }
-  
+
   @PostConstruct
   public void postConstruct() {
     setFacade(facade);
   }
-  
 }

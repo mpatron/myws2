@@ -119,7 +119,7 @@ public class UserEndpointTest extends AbstractRemoteIT {
     }
     return returnValue;
   }
-  
+
   public Address createAddress(Address user) {
     Address returnValue = null;
     String messageValidationError = null;
@@ -164,12 +164,12 @@ public class UserEndpointTest extends AbstractRemoteIT {
           user.setEmail(prof.getString("email"));
           user = createUser(user);
           JsonObject location = prof.getJsonObject("location");
-          Address address =  new Address();
+          Address address = new Address();
           address.setType(AddressEnum.HOME);
           address.setStreet(location.getString("street"));
           address.setCity(location.getString("city"));
           address.setState(location.getString("state"));
-          address.setPostcode(Integer.toString(location.getInt("postcode")) );
+          address.setPostcode(Integer.toString(location.getInt("postcode")));
           address.setUser(user);
           createAddress(address);
         }
@@ -249,7 +249,7 @@ public class UserEndpointTest extends AbstractRemoteIT {
         returnValue.stream().parallel().forEach(u -> {
           LOGGER.info("User => " + ToStringBuilder.reflectionToString(u));
         });
-        Assert.assertTrue(returnValue.size()>0);
+        Assert.assertTrue(returnValue.size() > 0);
       } else {
         messageValidationError = "Return => Reason : HTTP[" + statusType.getStatusCode() + "] " + statusType.getReasonPhrase()
             + " Contenu : " + (response.bufferEntity() ? response.readEntity(String.class) : "<empty>");

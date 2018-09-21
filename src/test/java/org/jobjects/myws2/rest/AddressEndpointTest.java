@@ -31,7 +31,6 @@ import org.jobjects.myws2.orm.user.User;
 import org.jobjects.myws2.tools.arquillian.AbstractRemoteIT;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -120,7 +119,7 @@ public class AddressEndpointTest extends AbstractRemoteIT {
     }
     return returnValue;
   }
-  
+
   public Address createAddress(Address address) {
     Address returnValue = null;
     String messageValidationError = null;
@@ -147,7 +146,6 @@ public class AddressEndpointTest extends AbstractRemoteIT {
     return returnValue;
   }
 
-
   @Before
   public void beforeClass() {
     final String filePathname = "/org/jobjects/myws2/rest/random-users.json";
@@ -156,8 +154,8 @@ public class AddressEndpointTest extends AbstractRemoteIT {
       JsonObject jsonObject = parser.readObject();
       JsonArray results = jsonObject.getJsonArray("results");
       results.stream().forEach(obj -> {
-        if (JsonValue.ValueType.OBJECT == obj.getValueType() ) {
-          JsonObject jsonObjectValue = (JsonObject) obj;  
+        if (JsonValue.ValueType.OBJECT == obj.getValueType()) {
+          JsonObject jsonObjectValue = (JsonObject) obj;
           JsonObject name = jsonObjectValue.getJsonObject("name");
           User user;
           user = findUser(jsonObjectValue.getString("email"));
