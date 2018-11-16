@@ -123,7 +123,7 @@ public class Address extends AbstractUUIDBaseEntity implements Serializable {
   }
 
   /**
-   * @param state
+   * @param stateCode
    *          the stateCode to set
    */
   public void setStateCode(final String stateCode) {
