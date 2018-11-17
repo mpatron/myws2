@@ -156,6 +156,12 @@
 			<version>3.0.14.Final</version>
 			<scope>provided</scope>
 		</dependency>
+<dependency>
+    <groupId>org.hibernate</groupId>
+    <artifactId>hibernate-validator</artifactId>
+    <version>5.2.4.Final</version>
+    <scope>test</scope>
+</dependency>		
 	</dependencies>
 	<!-- <distributionManagement> <repository> <id>nexus</id> <name>Releases</name> 
 		<url>http://192.168.56.128:8081/repository/maven-releases/</url> </repository> 

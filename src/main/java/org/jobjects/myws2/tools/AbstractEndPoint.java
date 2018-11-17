@@ -3,13 +3,9 @@ package org.jobjects.myws2.tools;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.ValidatorFactory;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
@@ -25,9 +21,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * 
@@ -38,7 +32,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  *
  * @param <T>
  */
-public class AbstractEndPoint<T extends AbstractUUIDBaseEntity & Serializable> {
+public class AbstractEndPoint<T extends AbstractUUIDBaseEntity & Serializable> extends AbstractValidation<T> {
   /**
    * Instance du logger.
    */
@@ -63,34 +57,6 @@ public class AbstractEndPoint<T extends AbstractUUIDBaseEntity & Serializable> {
    */
   public AbstractEndPoint(final Class<T> entityClasse) {
     this.entityClass = entityClasse;
-  }
-
-  public boolean isValid(final T entity) {
-    ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-    LOGGER.info(ReflectionToStringBuilder.toString(entity, ToStringStyle.SHORT_PREFIX_STYLE));
-    Set<ConstraintViolation<T>> errors = factory.getValidator().validate(entity);
-    for (ConstraintViolation<T> error : errors) {
-      LOGGER
-          .severe("AbstractEndPoint.isValid => " + ReflectionToStringBuilder.toString(error.getRootBean(), ToStringStyle.SHORT_PREFIX_STYLE)
-              + " " + error.getMessage() + " due to " + error.getInvalidValue());
-    }
-    return (errors.size() == 0);
-  }
-
-  public String getValidationMessages(final T entity) {
-    StringBuffer returnValue = new StringBuffer();
-    ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-    LOGGER.info(ReflectionToStringBuilder.toString(entity, ToStringStyle.SHORT_PREFIX_STYLE));
-    Set<ConstraintViolation<T>> errors = factory.getValidator().validate(entity);
-    if (errors.size() > 0) {
-      returnValue.append("Invalide : " + ReflectionToStringBuilder.toString(entity, ToStringStyle.SHORT_PREFIX_STYLE));
-      returnValue.append(System.lineSeparator());
-      for (ConstraintViolation<T> error : errors) {
-        returnValue.append("    - " + error.getPropertyPath() + "=" + error.getInvalidValue() + " : " + error.getMessage());
-        returnValue.append(System.lineSeparator());
-      }
-    }
-    return returnValue.toString();
   }
 
   @POST
