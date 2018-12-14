@@ -53,7 +53,6 @@ public class AddressStaless extends AbstractFacade<Address> implements AddressFa
    * @see AddressFacade
    *      #findByNamedQuery(java.lang.String, java.lang.Object[])
    */
-  @Override
   public List<Address> findByFirstName(final User user) {
     TypedQuery<Address> query = getEntityManager().createNamedQuery(Address.FIND_BY_USER, Address.class);
     return query.setParameter("user", user).getResultList();
