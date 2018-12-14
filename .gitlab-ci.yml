@@ -7,6 +7,7 @@ before_script:
   - mvn clean
 maven-test:
   stage: test
+  tags: dockerjob
   script:
     - echo "Running tests"
     - mvn test
