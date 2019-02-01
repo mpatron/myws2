@@ -67,8 +67,8 @@ public class RestApplicationConfiguration extends Application {
      * Activation de la génération de swagger.json
      * http://localhost:8880/api/swagger.json
      */
-    resources.add(io.swagger.jaxrs.listing.ApiListingResource.class);
-    resources.add(io.swagger.jaxrs.listing.SwaggerSerializers.class);
+    //resources.add(io.swagger.jaxrs.listing.ApiListingResource.class);
+    //resources.add(io.swagger.jaxrs.listing.SwaggerSerializers.class);
     return resources;
   }
 

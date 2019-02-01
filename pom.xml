@@ -140,14 +140,14 @@
 			<version>${version.thorntail}</version>
 		</dependency>
 		<!-- Begin gestion de bug de dépendance -->
-		<!-- --> 
+		<!-- 
 		<dependency>
 			<groupId>io.swagger</groupId>
 			<artifactId>swagger-jaxrs</artifactId>
 			<version>1.5.16</version>
 			<scope>provided</scope>
 		</dependency>
-		 
+		-->
 		<!-- End gestion de bug de dépendance -->
 		<dependency>
 			<groupId>io.thorntail</groupId>
