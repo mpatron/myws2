@@ -12,12 +12,6 @@ import org.jobjects.myws2.rest.MyBeanReader;
 import org.jobjects.myws2.rest.MyBeanWriter;
 import org.jobjects.myws2.rest.UserEndpoint;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-import io.swagger.annotations.Contact;
-import io.swagger.annotations.ExternalDocs;
-import io.swagger.annotations.Info;
-import io.swagger.annotations.License;
-import io.swagger.annotations.SwaggerDefinition;
-import io.swagger.annotations.Tag;
 
 /**
  * Dans JEE7, il ne suffit pas de d'utiliser les annotations REST pour le faire
@@ -35,19 +29,6 @@ import io.swagger.annotations.Tag;
  * @author Mickael
  *
  */
-@SwaggerDefinition(
-    info = @Info(
-        description = "Gets the hello world",
-        version = "v1.6",
-        title = "The hello API",
-        termsOfService = "https://help.github.com/articles/github-terms-of-service/#a-definitions",
-        contact = @Contact(name = "Alice Savoie", email = "alice@jobjects.org", url = "https://github.com/mpatron/myws2"),
-        license = @License(name = "Apache 2.0", url = "http://www.apache.org/licenses/LICENSE-2.0")),
-    consumes = { "application/json", "application/xml" },
-    produces = { "application/json", "application/xml" },
-    schemes = { SwaggerDefinition.Scheme.HTTP, SwaggerDefinition.Scheme.HTTPS },
-    tags = { @Tag(name = "Private", description = "Tag used to denote operations as private") },
-    externalDocs = @ExternalDocs(value = "Readme a lot", url = "https://github.com/mpatron/myws2/blob/master/readme.md"))
 @ApplicationPath("/api")
 public class RestApplicationConfiguration extends Application {
   @Override
@@ -63,12 +44,6 @@ public class RestApplicationConfiguration extends Application {
     resources.add(AddressEndpoint.class);
     resources.add(AddressWriter.class);
     resources.add(AddressReader.class);
-    /**
-     * Activation de la génération de swagger.json
-     * http://localhost:8880/api/swagger.json
-     */
-    //resources.add(io.swagger.jaxrs.listing.ApiListingResource.class);
-    //resources.add(io.swagger.jaxrs.listing.SwaggerSerializers.class);
     return resources;
   }
 

@@ -11,10 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.apache.commons.lang3.StringUtils;
 import org.jobjects.myws2.tools.Tracked;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 
-@Api(value = "hello", description = "Get the time", tags = "hello")
 @Path("/hello")
 @Tracked
 public class HelloWorldEndpoint {
@@ -22,7 +19,6 @@ public class HelloWorldEndpoint {
 
   @GET
   @Produces("text/plain")
-  @ApiOperation(value = "Get the hello", notes = "Returns the hello as a string", response = String.class)
   public Response doGet() {
     return Response.ok("Hello GET from WildFly Swarm!").build();
   }
@@ -30,7 +26,6 @@ public class HelloWorldEndpoint {
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  @ApiOperation(value = "Post the hello", notes = "Returns the hello as a string", response = String.class)
   public Response doPost(MyBean myBean) {
     Response returnValue = null;
     try {
