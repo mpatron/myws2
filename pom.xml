@@ -9,8 +9,7 @@
 	<packaging>war</packaging>
 
 	<properties>
-		<version.thorntail>2.2.1.Final</version.thorntail>
-		<version.h2>1.4.187</version.h2>
+		<version.thorntail>2.4.0.Final</version.thorntail>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<failOnMissingWebXml>false</failOnMissingWebXml>
