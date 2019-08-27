@@ -118,12 +118,14 @@
 			<scope>compile</scope>
 		</dependency>
 		<!-- Java EE 7 dependency -->
+		<!--
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
-			<version>7.0</version>
+			<version>8.0</version>
 			<scope>provided</scope>
 		</dependency>
+		-->
 		<!-- Brought in via WildFly Swarm `bom` -->
 		<dependency>
 			<groupId>io.thorntail</groupId>
@@ -180,6 +182,14 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
 			<version>5.2.4.Final</version>
+			<scope>test</scope>
+		</dependency>
+		<!--
+		-->
+		<!-- java.lang.NoClassDefFoundError: javax/xml/bind/annotation/XmlElement -->
+		<dependency>
+			<groupId>io.thorntail</groupId>
+			<artifactId>jaxrs-jaxb</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
