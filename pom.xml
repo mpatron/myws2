@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jobjects</groupId>
@@ -9,7 +10,7 @@
 	<packaging>war</packaging>
 
 	<properties>
-		<version.thorntail>2.3.0.Final</version.thorntail>
+		<version.thorntail>2.5.0.Final</version.thorntail>
 		<version.h2>1.4.187</version.h2>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
@@ -32,14 +33,14 @@
 	<build>
 		<finalName>demo</finalName>
 		<plugins>
-		    <plugin>
-		      <artifactId>maven-compiler-plugin</artifactId>
-		      <version>3.8.0</version>
-		        <configuration>
-		          <source>${maven.compiler.source}</source>
-		          <target>${maven.compiler.target}</target>
-		        </configuration>
-		    </plugin>		
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.0</version>
+				<configuration>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>io.thorntail</groupId>
 				<artifactId>thorntail-maven-plugin</artifactId>
@@ -53,33 +54,53 @@
 				</executions>
 				<configuration>
 					<properties>
-					<!-- 
-					Ne redirige pas
-						<swarm.swagger.web-app.context>http://localhost:8880/api/swagger.json</swarm.swagger.web-app.context>
-						 -->
+						<!-- Ne redirige pas <swarm.swagger.web-app.context>http://localhost:8880/api/swagger.json</swarm.swagger.web-app.context> -->
 					</properties>
 				</configuration>
 			</plugin>
-	      <plugin>
-	        <groupId>org.apache.maven.plugins</groupId>
-	        <artifactId>maven-enforcer-plugin</artifactId>
-	        <version>3.0.0-M2</version>
-	        <executions>
-	          <execution>
-	            <id>enforce-maven</id>
-	            <goals>
-	              <goal>enforce</goal>
-	            </goals>
-	            <configuration>
-	              <rules>
-	                <requireMavenVersion>
-	                  <version>3.5.2</version>
-	                </requireMavenVersion>
-	              </rules>    
-	            </configuration>
-	          </execution>
-	        </executions>
-	      </plugin>			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>3.0.0-M2</version>
+				<executions>
+					<execution>
+						<id>enforce-maven</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<requireMavenVersion>
+									<version>3.5.2</version>
+								</requireMavenVersion>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- For surefire and failsafe plugins we add an additional argument illegal-access=permit 
+				to allow all reflection access for third party libraries: -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.22.0</version>
+				<configuration>
+					<argLine>
+						--illegal-access=permit
+					</argLine>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>2.22.0</version>
+				<configuration>
+					<argLine>
+						--illegal-access=permit
+					</argLine>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 
@@ -97,12 +118,14 @@
 			<scope>compile</scope>
 		</dependency>
 		<!-- Java EE 7 dependency -->
+		<!--
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
-			<version>7.0</version>
+			<version>8.0</version>
 			<scope>provided</scope>
 		</dependency>
+		-->
 		<!-- Brought in via WildFly Swarm `bom` -->
 		<dependency>
 			<groupId>io.thorntail</groupId>
@@ -126,29 +149,6 @@
 			<groupId>io.thorntail</groupId>
 			<artifactId>logging</artifactId>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/io.thorntail/swagger-webapp -->
-		<!-- 
-		<dependency>
-			<groupId>io.thorntail</groupId>
-			<artifactId>swagger-webapp</artifactId>
-			<version>2018.4.1</version>
-		</dependency>
-		-->
-		<dependency>
-			<groupId>io.thorntail</groupId>
-			<artifactId>swagger</artifactId>
-			<version>${version.thorntail}</version>
-		</dependency>
-		<!-- Begin gestion de bug de dépendance -->
-		<!-- 
-		<dependency>
-			<groupId>io.swagger</groupId>
-			<artifactId>swagger-jaxrs</artifactId>
-			<version>1.5.16</version>
-			<scope>provided</scope>
-		</dependency>
-		-->
-		<!-- End gestion de bug de dépendance -->
 		<dependency>
 			<groupId>io.thorntail</groupId>
 			<artifactId>jaxrs-jsonp</artifactId>
@@ -178,12 +178,20 @@
 			<version>3.0.14.Final</version>
 			<scope>provided</scope>
 		</dependency>
-<dependency>
-    <groupId>org.hibernate</groupId>
-    <artifactId>hibernate-validator</artifactId>
-    <version>5.2.4.Final</version>
-    <scope>test</scope>
-</dependency>		
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.2.4.Final</version>
+			<scope>test</scope>
+		</dependency>
+		<!--
+		-->
+		<!-- java.lang.NoClassDefFoundError: javax/xml/bind/annotation/XmlElement -->
+		<dependency>
+			<groupId>io.thorntail</groupId>
+			<artifactId>jaxrs-jaxb</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<!-- <distributionManagement> <repository> <id>nexus</id> <name>Releases</name> 
 		<url>http://192.168.56.128:8081/repository/maven-releases/</url> </repository> 

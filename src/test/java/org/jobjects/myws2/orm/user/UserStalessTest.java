@@ -16,17 +16,26 @@ import org.jobjects.myws2.orm.address.Address;
 import org.jobjects.myws2.orm.address.AddressEnum;
 import org.jobjects.myws2.orm.address.AddressFacade;
 import org.jobjects.myws2.tools.arquillian.AbstractLocalIT;
+import org.jobjects.myws2.tools.log.JObjectsLogFormatter;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.wildfly.swarm.arquillian.DefaultDeployment;
 
 @RunWith(Arquillian.class)
+//@DefaultDeployment
 public class UserStalessTest extends AbstractLocalIT {
   private static Logger LOGGER = Logger.getLogger(UserStalessTest.class.getName());
   @EJB
   UserFacade userFacade;
   @EJB
   AddressFacade addressFacade;
+
+  @BeforeClass
+  public static void init() {
+    JObjectsLogFormatter.initializeLogging();
+  }
 
   @Test()
   public void testLoading() {

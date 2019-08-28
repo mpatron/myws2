@@ -33,9 +33,6 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.jobjects.myws2.orm.user.User;
 import org.jobjects.myws2.orm.user.UserFacade;
 import org.jobjects.myws2.tools.Tracked;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 
 /**
  * sources
@@ -45,7 +42,6 @@ import io.swagger.annotations.ApiParam;
  *
  */
 @Path("/users")
-@Api(value = "user", description = "Create, Show, update and delete user", tags = "user")
 @Tracked
 public class UserEndpoint {
   private transient Logger LOGGER = Logger.getLogger(getClass().getName());
@@ -68,7 +64,6 @@ public class UserEndpoint {
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  @ApiOperation(value = "Post the user", notes = "Returns the user as a json", response = User.class)
   public Response create(User entity) {
     if (!isValid(entity)) {
       return Response.status(Response.Status.BAD_REQUEST)
@@ -85,7 +80,6 @@ public class UserEndpoint {
   @Path("{id:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}}")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  @ApiOperation(value = "Get the user by id", notes = "Returns the user as a json", response = User.class)
   public Response read(@PathParam("id") UUID id) {
     Response returnValue = Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
     try {
@@ -107,7 +101,6 @@ public class UserEndpoint {
   @Path("/byemail/{email:[A-Z0-9._%-]+@[A-Z0-9.-]+\\\\.[A-Z]{2,4}")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  @ApiOperation(value = "Get the user by email", notes = "Returns the user as a json", response = User.class)
   public Response readbyemil(@PathParam("email") String email) {
     LOGGER.info("public Response read(@PathParam(\"email\") String " + email + ")");
     User returnValue = facade.findByEmail(email);
@@ -124,18 +117,9 @@ public class UserEndpoint {
   @GET
   // @Path("/all")
   @Produces(MediaType.APPLICATION_JSON)
-  @ApiOperation(value = "Get all users", notes = "Returns the user list as a json", response = List.class)
   public List<User> readall(
-      @ApiParam(
-          defaultValue = "0",
-          name = "rangeMin",
-          required = false,
-          example = "0") @DefaultValue("0") @QueryParam("rangeMin") Integer rangeMin,
-      @ApiParam(
-          defaultValue = "\"" + Integer.MAX_VALUE + "\"",
-          name = "rangeMax",
-          required = false,
-          example = "" + Integer.MAX_VALUE) @DefaultValue("" + Integer.MAX_VALUE) @QueryParam("rangeMax") Integer rangeMax)
+       @DefaultValue("0") @QueryParam("rangeMin") Integer rangeMin,
+       @DefaultValue("" + Integer.MAX_VALUE) @QueryParam("rangeMax") Integer rangeMax)
       throws WebApplicationException {
     LOGGER.info("public List<User> read(@QueryParam(\"rangeMin\") Integer \"" + rangeMin + "\", @QueryParam(\"rangeMax\") Integer \""
         + rangeMax + "\")");
@@ -147,7 +131,6 @@ public class UserEndpoint {
   @Path("{id}")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  @ApiOperation(value = "Put the user", notes = "Returns the user as a json", response = User.class)
   public Response update(@PathParam("id") UUID id, User entity) throws WebApplicationException {
     User returnValue = facade.find(id);
     if (isValid(entity)) {
@@ -183,7 +166,6 @@ public class UserEndpoint {
   @Path("{id}")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  @ApiOperation(value = "Delete the user", notes = "Returns the user as a json", response = User.class)
   public Response delete(@PathParam("id") UUID id) throws WebApplicationException {
     User returnValue = facade.find(id);
     if (returnValue == null) {
