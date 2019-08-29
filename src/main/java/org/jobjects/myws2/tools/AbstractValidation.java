@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
 
 public class AbstractValidation<T> {
   /**
@@ -43,7 +43,7 @@ public class AbstractValidation<T> {
         ObjectMapper mapper = new ObjectMapper();
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        mapper.setDateFormat(new ISO8601DateFormat());
+        mapper.setDateFormat(new StdDateFormat());
         ObjectNode jsonReturnValue = mapper.createObjectNode();
         jsonReturnValue.putPOJO("entity", entity);
         ArrayNode arrayNode = mapper.createArrayNode();
