@@ -36,7 +36,7 @@ public class AddressStaless extends AbstractFacade<Address> implements AddressFa
    * @param entityManager
    *          the entityManager to set
    */
-  public final void setEntityManager(final EntityManager entityManager) {
+  public void setEntityManager(final EntityManager entityManager) {
     this.entityManager = entityManager;
   }
 
@@ -45,7 +45,7 @@ public class AddressStaless extends AbstractFacade<Address> implements AddressFa
    * @see org.jobjects.myws.orm.tools.AbstractFacade#getEntityManager()
    */
   @Override
-  public final EntityManager getEntityManager() {
+  public EntityManager getEntityManager() {
     return entityManager;
   }
 

@@ -73,7 +73,7 @@ public class Address extends AbstractUUIDBaseEntity implements Serializable {
   /**
    * @return the type
    */
-  public final AddressEnum getType() {
+  public AddressEnum getType() {
     return type;
   }
 
@@ -81,14 +81,14 @@ public class Address extends AbstractUUIDBaseEntity implements Serializable {
    * @param type
    *          the type to set
    */
-  public final void setType(final AddressEnum type) {
+  public void setType(final AddressEnum type) {
     this.type = type;
   }
 
   /**
    * @return the street
    */
-  public final String getStreet() {
+  public String getStreet() {
     return street;
   }
 
@@ -96,14 +96,14 @@ public class Address extends AbstractUUIDBaseEntity implements Serializable {
    * @param street
    *          the street to set
    */
-  public final void setStreet(final String street) {
+  public void setStreet(final String street) {
     this.street = street;
   }
 
   /**
    * @return the city
    */
-  public final String getCity() {
+  public String getCity() {
     return city;
   }
 
@@ -111,14 +111,14 @@ public class Address extends AbstractUUIDBaseEntity implements Serializable {
    * @param city
    *          the city to set
    */
-  public final void setCity(final String city) {
+  public void setCity(final String city) {
     this.city = city;
   }
 
   /**
    * @return the stateCode
    */
-  public final String getStateCode() {
+  public String getStateCode() {
     return stateCode;
   }
 

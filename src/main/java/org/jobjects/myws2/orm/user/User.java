@@ -71,7 +71,7 @@ public class User extends AbstractUUIDBaseEntity implements Serializable {
   /**
    * @return the firstName
    */
-  public final String getFirstName() {
+  public String getFirstName() {
     return firstName;
   }
 
@@ -79,14 +79,14 @@ public class User extends AbstractUUIDBaseEntity implements Serializable {
    * @param firstName
    *          the firstName to set
    */
-  public final void setFirstName(final String firstName) {
+  public void setFirstName(final String firstName) {
     this.firstName = firstName;
   }
 
   /**
    * @return the lastName
    */
-  public final String getLastName() {
+  public String getLastName() {
     return lastName;
   }
 
@@ -94,14 +94,14 @@ public class User extends AbstractUUIDBaseEntity implements Serializable {
    * @param lastName
    *          the lastName to set
    */
-  public final void setLastName(final String lastName) {
+  public void setLastName(final String lastName) {
     this.lastName = lastName;
   }
 
   /**
    * @return the email
    */
-  public final String getEmail() {
+  public String getEmail() {
     return email;
   }
 
@@ -109,14 +109,14 @@ public class User extends AbstractUUIDBaseEntity implements Serializable {
    * @param email
    *          the email to set
    */
-  public final void setEmail(final String email) {
+  public void setEmail(final String email) {
     this.email = email;
   }
 
   /**
    * @return the address
    */
-  public final List<Address> getAddress() {
+  public List<Address> getAddress() {
     return address;
   }
 
@@ -124,7 +124,7 @@ public class User extends AbstractUUIDBaseEntity implements Serializable {
    * @param address
    *          the address to set
    */
-  public final void setAddress(final List<Address> address) {
+  public void setAddress(final List<Address> address) {
     this.address = address;
   }
 
