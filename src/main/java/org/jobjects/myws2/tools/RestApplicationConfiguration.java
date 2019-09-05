@@ -38,6 +38,7 @@ public class RestApplicationConfiguration extends Application {
     // resources.add(CustomRequestWrapperFilter.class);
     resources.add(TrafficLogger.class);
     resources.add(HelloWorldEndpoint.class);
+    resources.add(TimeOutEndpoint.class);
     resources.add(UserEndpoint.class);
     resources.add(MyBeanWriter.class);
     resources.add(MyBeanReader.class);
