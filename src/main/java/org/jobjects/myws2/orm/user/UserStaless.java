@@ -39,7 +39,8 @@ public class UserStaless extends AbstractFacade<User> implements UserFacade {
     this.entityManager = entityManager;
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
    * @see org.jobjects.myws.orm.tools.AbstractFacade#getEntityManager()
    */
   @Override
@@ -49,11 +50,11 @@ public class UserStaless extends AbstractFacade<User> implements UserFacade {
 
   /*
    * (non-Javadoc)
-   * @see org.jobjects.myws.orm.user.UserFacade#findByFirstName(java.lang.String)
+   * @see
+   * org.jobjects.myws.orm.user.UserFacade#findByFirstName(java.lang.String)
    */
   public List<User> findByFirstName(final String firstName) {
-    TypedQuery<User> query = getEntityManager()
-        .createNamedQuery(User.FIND_BY_FIRSTNAME, User.class);
+    TypedQuery<User> query = getEntityManager().createNamedQuery(User.FIND_BY_FIRSTNAME, User.class);
     return query.setParameter("firstName", firstName).getResultList();
   }
 

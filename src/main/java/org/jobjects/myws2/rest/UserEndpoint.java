@@ -117,10 +117,8 @@ public class UserEndpoint {
   @GET
   // @Path("/all")
   @Produces(MediaType.APPLICATION_JSON)
-  public List<User> readall(
-       @DefaultValue("0") @QueryParam("rangeMin") Integer rangeMin,
-       @DefaultValue("" + Integer.MAX_VALUE) @QueryParam("rangeMax") Integer rangeMax)
-      throws WebApplicationException {
+  public List<User> readall(@DefaultValue("0") @QueryParam("rangeMin") Integer rangeMin,
+      @DefaultValue("" + Integer.MAX_VALUE) @QueryParam("rangeMax") Integer rangeMax) throws WebApplicationException {
     LOGGER.info("public List<User> read(@QueryParam(\"rangeMin\") Integer \"" + rangeMin + "\", @QueryParam(\"rangeMax\") Integer \""
         + rangeMax + "\")");
     List<User> returnValue = facade.findRange(rangeMin, rangeMax);

@@ -40,21 +40,6 @@ public class OrmTestCase {
     WebArchive returnValue = null;
     LOGGER.info("Local mode, looking log into JEE server log file.");
     returnValue = AbstractIT.createTestableDeployment();
-    // PomEquippedResolveStage pom =
-    // Maven.resolver().loadPomFromFile("pom.xml");
-    // File[] hibernate_entitymanager =
-    // Maven.resolver().resolve("org.hibernate:hibernate-entitymanager:5.0.10.Final").withTransitivity().asFile();
-    // returnValue.addAsLibraries(hibernate_entitymanager);
-    // File[] hibernate_core =
-    // Maven.resolver().resolve("org.hibernate:hibernate-core:5.0.10.Final").withTransitivity().asFile();
-    // returnValue.addAsLibraries(hibernate_core);
-    // File[] hibernate_ehcache =
-    // Maven.resolver().resolve("org.hibernate:hibernate-ehcache:5.0.10.Final").withTransitivity().asFile();
-    // returnValue.addAsLibraries(hibernate_ehcache);
-    // File[] dom4j =
-    // Maven.resolver().resolve("dom4j:dom4j:1.6.1").withTransitivity().asFile();
-    // returnValue.addAsLibraries(dom4j);
-    // returnValue.addAsLibraries(thirdPartyLibs());
     return returnValue;
   }
 

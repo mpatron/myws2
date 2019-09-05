@@ -13,8 +13,11 @@ import javax.validation.Payload;
 @Target({ ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidStringCountryISO2 {
-	String message() default "{org.jobjects.myws2.orm.validator.ValidStringCountryISO2.message}";
-	Class<?>[] groups() default {};
-	Class<? extends Payload>[] payload() default {};
-	boolean onlyCountry() default false;
+  String message() default "{org.jobjects.myws2.orm.validator.ValidStringCountryISO2.message}";
+
+  Class<?>[] groups() default {};
+
+  Class<? extends Payload>[] payload() default {};
+
+  boolean onlyCountry() default false;
 }

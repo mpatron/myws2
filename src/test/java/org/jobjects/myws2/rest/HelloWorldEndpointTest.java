@@ -18,7 +18,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(Arquillian.class)
-// @DefaultDeployment
 public class HelloWorldEndpointTest extends AbstractRemoteIT {
   private static Logger LOGGER = Logger.getLogger(HelloWorldEndpointTest.class.getName());
   // private final static String REDIRECT_PORT = "9143";

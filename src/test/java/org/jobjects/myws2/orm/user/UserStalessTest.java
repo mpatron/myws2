@@ -21,10 +21,8 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.wildfly.swarm.arquillian.DefaultDeployment;
 
 @RunWith(Arquillian.class)
-//@DefaultDeployment
 public class UserStalessTest extends AbstractLocalIT {
   private static Logger LOGGER = Logger.getLogger(UserStalessTest.class.getName());
   @EJB

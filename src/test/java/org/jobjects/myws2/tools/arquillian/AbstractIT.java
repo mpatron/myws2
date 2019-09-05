@@ -27,28 +27,10 @@ public abstract class AbstractIT {
   public static final String SOURCES_TEST_JAVA_DIR = "src/test/java";
   public static final String SOURCES_TEST_RESOURCES_DIR = "src/test/resources";
 
-  // public static class MyFilter implements Filter<ArchivePath> {
-  //
-  // public MyFilter() {
-  // }
-  //
-  // @Override
-  // public boolean include(ArchivePath archivePath) {
-  // boolean returnValue=!StringUtils.endsWith(archivePath.get(), "Test.class")
-  // && !StringUtils.startsWith(archivePath.get(),
-  // "org/jobjects/myws/tools/arquillian");
-  // //if(returnValue)
-  // LOGGER.finest("archivePath:" + archivePath.get() +" "+returnValue);
-  // return returnValue;
-  // }
-  //
-  // }
   public static WebArchive createTestableDeployment() {
     WebArchive war = null;
     try {
       war = ShrinkWrap.create(WebArchive.class);
-      // war.addAsWebResource(new File("src/main/webapp/index.html"),
-      // "index.html");
       addStandardFileInWebInfResource(war);
       war.addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
       war.addAsManifestResource(new File(SOURCES_MAIN_RESOURCES_DIR + "/META-INF/persistence.xml"), "persistence.xml");
