@@ -10,6 +10,7 @@ import org.jobjects.myws2.rest.AddressWriter;
 import org.jobjects.myws2.rest.HelloWorldEndpoint;
 import org.jobjects.myws2.rest.MyBeanReader;
 import org.jobjects.myws2.rest.MyBeanWriter;
+import org.jobjects.myws2.rest.TimeOutEndpoint;
 import org.jobjects.myws2.rest.UserEndpoint;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
