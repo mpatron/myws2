@@ -13,6 +13,7 @@ Deux modes pour lancer l'application :
 git clone git@github.com:mpatron/myws2.git
 cd myws2
 git checkout tags/v1.8
+mvn clean package
 
 java -jar target\demo-swarm.jar
 # ou
