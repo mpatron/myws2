@@ -15,6 +15,9 @@
 *.iml
 *.iws
 
+#IDEA
+.vscode
+
 # Mac
 .DS_Store
 
