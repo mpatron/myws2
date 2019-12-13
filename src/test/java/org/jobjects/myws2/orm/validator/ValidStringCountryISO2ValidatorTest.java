@@ -8,15 +8,10 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import org.jboss.arquillian.junit.Arquillian;
 import org.jobjects.myws2.tools.log.JObjectsLogFormatter;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.wildfly.swarm.arquillian.DefaultDeployment;
 
-@RunWith(Arquillian.class)
-@DefaultDeployment
 public class ValidStringCountryISO2ValidatorTest {
   private static Logger LOGGER = Logger.getLogger(ValidStringCountryISO2ValidatorTest.class.getName());
 

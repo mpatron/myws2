@@ -26,7 +26,6 @@ import org.apache.commons.lang3.StringUtils;
  * @author MPT
  *
  */
-@Tracked
 @Provider
 public class TrafficLogger implements ContainerRequestFilter, ContainerResponseFilter {
   private enum StateEnum {
