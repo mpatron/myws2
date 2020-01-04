@@ -61,6 +61,7 @@ public class UserEndpointTest extends AbstractRemoteIT {
             + " Contenu : " + (response.bufferEntity() ? response.readEntity(String.class) : "<empty>");
         LOGGER.log(Level.WARNING, messageValidationError);
       }
+      client.close();
     } catch (Throwable e) {
       LOGGER.log(Level.SEVERE, e.getMessage(), e);
       Assert.assertTrue(false);
@@ -87,6 +88,7 @@ public class UserEndpointTest extends AbstractRemoteIT {
             + " Contenu : " + (response.bufferEntity() ? response.readEntity(String.class) : "<empty>");
         LOGGER.log(Level.WARNING, messageValidationError);
       }
+      client.close();
     } catch (Throwable e) {
       LOGGER.log(Level.SEVERE, e.getMessage(), e);
       Assert.assertTrue(false);
@@ -113,6 +115,7 @@ public class UserEndpointTest extends AbstractRemoteIT {
             + " Contenu : " + (response.bufferEntity() ? response.readEntity(String.class) : "<empty>");
         LOGGER.log(Level.WARNING, messageValidationError);
       }
+      client.close();
     } catch (Throwable e) {
       LOGGER.log(Level.SEVERE, e.getMessage(), e);
       Assert.assertTrue(false);
@@ -139,6 +142,7 @@ public class UserEndpointTest extends AbstractRemoteIT {
             + " Contenu : " + (response.bufferEntity() ? response.readEntity(String.class) : "<empty>");
         LOGGER.log(Level.WARNING, messageValidationError);
       }
+      client.close();
     } catch (Throwable e) {
       LOGGER.log(Level.SEVERE, e.getMessage(), e);
       Assert.assertTrue(false);
@@ -205,6 +209,7 @@ public class UserEndpointTest extends AbstractRemoteIT {
         LOGGER.log(Level.WARNING, messageValidationError);
         Assert.assertTrue(false);
       }
+      client.close();
     } catch (Throwable e) {
       LOGGER.log(Level.SEVERE, e.getMessage(), e);
       Assert.assertTrue(false);
@@ -256,6 +261,7 @@ public class UserEndpointTest extends AbstractRemoteIT {
         LOGGER.log(Level.WARNING, messageValidationError);
         Assert.assertTrue(false);
       }
+      client.close();
     } catch (Throwable e) {
       LOGGER.log(Level.SEVERE, e.getMessage(), e);
       Assert.assertTrue(false);
@@ -312,6 +318,7 @@ public class UserEndpointTest extends AbstractRemoteIT {
         LOGGER.log(Level.WARNING, messageValidationError);
         Assert.assertTrue(false);
       }
+      client.close();
     } catch (Throwable e) {
       LOGGER.log(Level.SEVERE, e.getMessage(), e);
       Assert.assertTrue(false);

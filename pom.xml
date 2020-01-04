@@ -117,21 +117,19 @@
 			<scope>compile</scope>
 		</dependency>
 		<!-- Java EE 7 dependency -->
-		<!--
-		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-api</artifactId>
-			<version>8.0</version>
-			<scope>provided</scope>
-		</dependency>
-		-->
+		<!-- <dependency> <groupId>javax</groupId> <artifactId>javaee-api</artifactId> 
+			<version>8.0</version> <scope>provided</scope> </dependency> -->
 		<!-- Brought in via WildFly Swarm `bom` -->
 		<dependency>
 			<groupId>io.thorntail</groupId>
 			<artifactId>arquillian</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- WildFly Swarm Fractions -->
+		<dependency>
+			<groupId>io.thorntail</groupId>
+			<artifactId>microprofile-health</artifactId>
+		</dependency>
+		<!-- Thorntail Fractions -->
 		<dependency>
 			<groupId>io.thorntail</groupId>
 			<artifactId>datasources</artifactId>
@@ -164,23 +162,22 @@
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-client</artifactId>
-			<version>3.0.14.Final</version>
+			<version>4.4.2.Final</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.jboss.resteasy</groupId>
-			<artifactId>resteasy-jackson-provider</artifactId>
-			<version>3.0.14.Final</version>
-			<scope>provided</scope>
+		    <groupId>org.jboss.resteasy</groupId>
+		    <artifactId>resteasy-jackson2-provider</artifactId>
+		    <version>4.4.2.Final</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>5.2.4.Final</version>
+			<version>6.1.0.Final</version>
 			<scope>test</scope>
 		</dependency>
-		<!--
-		-->
+		<!-- -->
 		<!-- java.lang.NoClassDefFoundError: javax/xml/bind/annotation/XmlElement -->
 		<dependency>
 			<groupId>io.thorntail</groupId>

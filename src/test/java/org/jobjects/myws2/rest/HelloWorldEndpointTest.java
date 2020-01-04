@@ -48,6 +48,7 @@ public class HelloWorldEndpointTest extends AbstractRemoteIT {
         LOGGER.log(Level.WARNING, messageValidationError);
         Assert.assertTrue(false);
       }
+      client.close();
     } catch (Exception e) {
       LOGGER.log(Level.SEVERE, e.getMessage(), e);
       Assert.assertTrue(false);
