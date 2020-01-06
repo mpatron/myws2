@@ -15,9 +15,9 @@ cd myws2
 git checkout tags/v1.9
 mvn clean package
 
-java -jar target\demo-swarm.jar
+java -jar target\demo-thorntail.jar
 # ou
-mvn wildfly-swarm:run
+mvn  mvn  thorntail:run
 ```
 
 ## 2 - Tests
