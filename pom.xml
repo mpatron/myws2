@@ -6,7 +6,7 @@
 	<groupId>org.jobjects</groupId>
 	<artifactId>myws2</artifactId>
 	<name>API REST J2EE Example</name>
-	<version>1.8.0-SNAPSHOT</version>
+	<version>1.9.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<properties>
