@@ -5,7 +5,6 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.List;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
@@ -50,32 +49,6 @@ public class AddressEndpointTest extends AbstractRemoteIT {
       LOGGER.info("public void testReadIntegerInteger() {} to " + url);
       Client client = ClientBuilder.newClient();
       WebTarget webTarget = client.target(url).queryParam("email", email);
-      Response response = webTarget.request().get();
-      StatusType statusType = response.getStatusInfo();
-      if (Response.Status.Family.SUCCESSFUL.equals(Response.Status.Family.familyOf(statusType.getStatusCode()))) {
-        returnValue = response.readEntity(new GenericType<User>() {
-        });
-        LOGGER.info("Return => " + returnValue);
-      } else {
-        messageValidationError = "Return => Reason : HTTP[" + statusType.getStatusCode() + "] " + statusType.getReasonPhrase()
-            + " Contenu : " + (response.bufferEntity() ? response.readEntity(String.class) : "<empty>");
-        LOGGER.log(Level.WARNING, messageValidationError);
-      }
-    } catch (Throwable e) {
-      LOGGER.log(Level.SEVERE, e.getMessage(), e);
-      Assert.assertTrue(false);
-    }
-    return returnValue;
-  }
-
-  private User getUser(UUID id) {
-    User returnValue = null;
-    String messageValidationError = null;
-    try {
-      String url = deployUrl.toString().replace("8080", REDIRECT_PORT) + "api/users/" + URLEncoder.encode(id.toString(), "UTF-8");
-      LOGGER.info("public void testReadIntegerInteger() {} to " + url);
-      Client client = ClientBuilder.newClient();
-      WebTarget webTarget = client.target(url);
       Response response = webTarget.request().get();
       StatusType statusType = response.getStatusInfo();
       if (Response.Status.Family.SUCCESSFUL.equals(Response.Status.Family.familyOf(statusType.getStatusCode()))) {

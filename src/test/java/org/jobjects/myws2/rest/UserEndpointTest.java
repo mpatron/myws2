@@ -389,6 +389,7 @@ public class UserEndpointTest extends AbstractRemoteIT {
         LOGGER.log(Level.WARNING, messageValidationError);
         Assert.assertTrue(false);
       }
+      client.close();
     } catch (Throwable e) {
       LOGGER.log(Level.SEVERE, e.getMessage(), e);
       Assert.assertTrue(false);

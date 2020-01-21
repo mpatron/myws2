@@ -28,6 +28,6 @@ target
 #Linux
 *~
 
-derby.log
+# Logs
+*.log
 /nb-configuration.xml
-/audit.log
