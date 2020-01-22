@@ -99,22 +99,6 @@
 					</argLine>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>io.thorntail</groupId>
-				<artifactId>thorntail-maven-plugin</artifactId>
-				<version>${version.thorntail}</version>
-				<executions>
-					<execution>
-						<id>package</id>
-					</execution>
-					<execution>
-						<id>start</id>
-					</execution>
-					<execution>
-						<id>stop</id>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 	</build>
 
@@ -187,7 +171,7 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
+			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
 			<version>6.1.0.Final</version>
 			<scope>test</scope>

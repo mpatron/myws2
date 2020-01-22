@@ -47,7 +47,7 @@ public abstract class AbstractIT {
       // org/jobjects/random-users.json
       war.addPackages(true, "org.jobjects");
       war.as(ZipExporter.class).exportTo(new File("target/myPackage.war"), true);
-      LOGGER.severe("==> War name :" + war.toString(Formatters.VERBOSE));
+      LOGGER.log(Level.INFO, "==> War name :" + war.toString(Formatters.VERBOSE));
     } catch (Exception e) {
       LOGGER.log(Level.SEVERE, e.getLocalizedMessage(), e);
     }
