@@ -4,8 +4,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -14,9 +14,6 @@ import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.JsonValue;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.ValidatorFactory;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -24,9 +21,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.StatusType;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -38,7 +33,6 @@ import org.jobjects.myws2.orm.user.UserFacade;
 import org.jobjects.myws2.tools.arquillian.AbstractRemoteIT;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -52,36 +46,7 @@ public class AddressEndpointTest extends AbstractRemoteIT {
 
   @EJB
   UserFacade userFacade;
-  
-  private static boolean FLAG = false;
-  
-//  @BeforeClass()
-//  public static void testLoading() {
-//    LOGGER.info("public void testLoading()");
-//    List<User> users = null;
-//    try {
-//      JSonImpTest.setUpBeforeClass2();
-//      users = JSonImpTest.getUsers();
-//    } catch (Exception e) {
-//      LOGGER.log(Level.SEVERE, e.getLocalizedMessage(), e);
-//      Assert.fail(e.getLocalizedMessage());
-//    }
-//    Assert.assertNotNull(users);
-//    Assert.assertTrue(users.size() > 0);
-//    ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-//    users.stream().parallel().forEach(u -> {
-//      LOGGER.info("first=" + u.getFirstName() + " last=" + u.getLastName() + " email=" + u.getEmail());
-//      Set<ConstraintViolation<User>> errors = factory.getValidator().validate(u);
-//      for (ConstraintViolation<User> error : errors) {
-//        LOGGER.severe(ReflectionToStringBuilder.toString(error.getRootBean(), ToStringStyle.SHORT_PREFIX_STYLE) + " " + error.getMessage()
-//            + " due to " + error.getInvalidValue());
-//      }
-//      if (errors.size() == 0) {
-//        userFacade.create(u);
-//      }
-//    });
-//  }
-  
+
   private User findUser(String email) {
     User returnValue = null;
     String messageValidationError = null;
@@ -181,7 +146,6 @@ public class AddressEndpointTest extends AbstractRemoteIT {
             user.setFirstName(name.getString("first"));
             user.setLastName(name.getString("last"));
             user.setEmail(jsonObjectValue.getString("email"));
-            user = createUser(user);
             JsonObject location = jsonObjectValue.getJsonObject("location");
             Address address = new Address();
             address.setType(AddressEnum.HOME);
@@ -190,11 +154,13 @@ public class AddressEndpointTest extends AbstractRemoteIT {
             address.setState(location.getString("state"));
             address.setPostcode(Integer.toString(location.getInt("postcode")));
             address.setUser(user);
-            createAddress(address);
+            List<Address> listAddress = Arrays.asList(address);
+            user.setAddress(listAddress);
+            user = createUser(user);
+            LOGGER.info("Created => " + user);            
           }
         }
       });
-      FLAG = true;
     } catch (Exception e) {
       LOGGER.log(Level.SEVERE, e.getLocalizedMessage(), e);
     }
@@ -203,9 +169,6 @@ public class AddressEndpointTest extends AbstractRemoteIT {
   @Test
   @RunAsClient
   public void testReadIntegerInteger() {
-    if (!FLAG) {
-      beforeClass();
-    }
     List<Address> returnValue = null;
     String messageValidationError = null;
     try {

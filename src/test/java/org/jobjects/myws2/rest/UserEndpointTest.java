@@ -184,7 +184,6 @@ public class UserEndpointTest extends AbstractRemoteIT {
           address.setUser(user);
           List<Address> listAddress = Arrays.asList(address);
           user.setAddress(listAddress);
-//          createAddress(address);
           user = createUser(user);
           LOGGER.info("Created => " + user);
         }
