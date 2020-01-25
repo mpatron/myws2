@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -29,7 +30,9 @@ import org.jobjects.myws2.orm.address.AddressEnum;
 import org.jobjects.myws2.orm.user.JSonImpTest;
 import org.jobjects.myws2.orm.user.User;
 import org.jobjects.myws2.tools.arquillian.AbstractRemoteIT;
+import org.jobjects.myws2.tools.log.JObjectsLogFormatter;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -41,6 +44,11 @@ public class UserEndpointTest extends AbstractRemoteIT {
   private static boolean FLAG = false;
   @ArquillianResource
   protected URL deployUrl;
+  
+  @BeforeClass
+  public static void init() {
+    JObjectsLogFormatter.initializeLogging();
+  }
 
   private User findUser(String email) {
     User returnValue = null;
@@ -166,7 +174,6 @@ public class UserEndpointTest extends AbstractRemoteIT {
           user.setFirstName(name.getString("first"));
           user.setLastName(name.getString("last"));
           user.setEmail(prof.getString("email"));
-          user = createUser(user);
           JsonObject location = prof.getJsonObject("location");
           Address address = new Address();
           address.setType(AddressEnum.HOME);
@@ -175,7 +182,11 @@ public class UserEndpointTest extends AbstractRemoteIT {
           address.setState(location.getString("state"));
           address.setPostcode(Integer.toString(location.getInt("postcode")));
           address.setUser(user);
-          createAddress(address);
+          List<Address> listAddress = Arrays.asList(address);
+          user.setAddress(listAddress);
+//          createAddress(address);
+          user = createUser(user);
+          LOGGER.info("Created => " + user);
         }
       });
     } catch (Exception e) {

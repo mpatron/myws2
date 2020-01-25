@@ -12,7 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -66,9 +65,6 @@ public class Address extends AbstractUUIDBaseEntity implements Serializable {
       nullable = false) /* UUID_ID vient de user */
   @NotNull(message = "Pas d'adresse sans utilisateur.")
   private User user;
-  /* Non persitable par JPA, utilisé pour le JSON */
-  @Transient
-  private String userUuid;
 
   /**
    * @return the type
@@ -173,14 +169,6 @@ public class Address extends AbstractUUIDBaseEntity implements Serializable {
    */
   public void setUser(User user) {
     this.user = user;
-  }
-
-  public String getUserUuid() {
-    return userUuid;
-  }
-
-  public void setUserUuid(String userUuid) {
-    this.userUuid = userUuid;
   }
 
   @Override

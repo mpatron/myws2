@@ -42,24 +42,27 @@ public class UserStalessTest extends AbstractLocalIT {
     try {
       JSonImpTest.setUpBeforeClass2();
       users = JSonImpTest.getUsers();
+      Assert.assertNotNull(users);
+      Assert.assertTrue(users.size() > 0);
+      ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+      users.stream().parallel().forEach(u -> {
+        LOGGER.info("first=" + u.getFirstName() + " last=" + u.getLastName() + " email=" + u.getEmail());
+        Set<ConstraintViolation<User>> errors = factory.getValidator().validate(u);
+        for (ConstraintViolation<User> error : errors) {
+          LOGGER.severe(ReflectionToStringBuilder.toString(error.getRootBean(), ToStringStyle.SHORT_PREFIX_STYLE) + " " + error.getMessage()
+              + " due to " + error.getInvalidValue());
+        }
+        if (errors.size() == 0) {
+          User _user = userFacade.create(u);
+          LOGGER.info("Created => first=" + _user.getFirstName() + " last=" + _user.getLastName() + " email=" + _user.getEmail());
+        } else {
+          LOGGER.warning("Not created => first=" + u.getFirstName() + " last=" + u.getLastName() + " email=" + u.getEmail());
+        }
+      });
     } catch (Exception e) {
       LOGGER.log(Level.SEVERE, e.getLocalizedMessage(), e);
       Assert.fail(e.getLocalizedMessage());
     }
-    Assert.assertNotNull(users);
-    Assert.assertTrue(users.size() > 0);
-    ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-    users.stream().parallel().forEach(u -> {
-      LOGGER.info("first=" + u.getFirstName() + " last=" + u.getLastName() + " email=" + u.getEmail());
-      Set<ConstraintViolation<User>> errors = factory.getValidator().validate(u);
-      for (ConstraintViolation<User> error : errors) {
-        LOGGER.severe(ReflectionToStringBuilder.toString(error.getRootBean(), ToStringStyle.SHORT_PREFIX_STYLE) + " " + error.getMessage()
-            + " due to " + error.getInvalidValue());
-      }
-      if (errors.size() == 0) {
-        userFacade.create(u);
-      }
-    });
   }
 
   @Test

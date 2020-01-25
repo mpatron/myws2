@@ -57,7 +57,7 @@ public class JObjectsLogFormatter extends Formatter {
       loggerName = "root";
     }
     StringBuilder output = new StringBuilder();
-    if (SystemUtils.IS_OS_UNIX) {
+    if (SystemUtils.IS_OS_UNIX | SystemUtils.IS_OS_WINDOWS_10) {
       if (Level.FINEST.equals(record.getLevel())) {
         output.append(StringUtils.rightPad("[" + ANSI_GREEN + record.getLevel().getName() + ANSI_RESET + "]", 9));
       } else if (Level.FINER.equals(record.getLevel())) {

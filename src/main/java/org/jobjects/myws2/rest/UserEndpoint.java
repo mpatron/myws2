@@ -30,6 +30,7 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.jobjects.myws2.orm.address.Address;
 import org.jobjects.myws2.orm.user.User;
 import org.jobjects.myws2.orm.user.UserFacade;
 import org.jobjects.myws2.tools.Tracked;
@@ -52,10 +53,15 @@ public class UserEndpoint {
 
   private boolean isValid(User user) {
     ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-    LOGGER.info(ReflectionToStringBuilder.toString(user, ToStringStyle.SHORT_PREFIX_STYLE));
+    if(null != user) {
+      for (Address address : user.getAddress()) {
+        address.setUser(user);
+      }
+    }
+    LOGGER.info("Valiation in processing :" + ReflectionToStringBuilder.toString(user, ToStringStyle.SHORT_PREFIX_STYLE));
     Set<ConstraintViolation<User>> errors = factory.getValidator().validate(user);
     for (ConstraintViolation<User> error : errors) {
-      LOGGER.severe(ReflectionToStringBuilder.toString(error.getRootBean(), ToStringStyle.SHORT_PREFIX_STYLE) + " " + error.getMessage()
+      LOGGER.severe("  - " + ReflectionToStringBuilder.toString(error.getRootBean(), ToStringStyle.SHORT_PREFIX_STYLE) + " " + error.getMessage()
           + " due to " + error.getInvalidValue());
     }
     return (errors.size() == 0);
@@ -101,7 +107,7 @@ public class UserEndpoint {
   @Path("/byemail/{email:[A-Z0-9._%-]+@[A-Z0-9.-]+\\\\.[A-Z]{2,4}")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response readbyemil(@PathParam("email") String email) {
+  public Response readByEmail(@PathParam("email") String email) {
     LOGGER.info("public Response read(@PathParam(\"email\") String " + email + ")");
     User returnValue = facade.findByEmail(email);
     return Response.status(Response.Status.OK).entity(returnValue).header("Access-Control-Allow-Headers", "X-extra-header")
